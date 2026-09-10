@@ -43,10 +43,37 @@ def tile(skin, signature=False, platform="chatgpt"):
         ImageDraw.Draw(glow).ellipse((370, -150, 730, 210), fill=accent + "35")
         im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(55))).convert("RGB")
     d = ImageDraw.Draw(im)
+    if platform == "claude":
+        # Claude home layout: compact rail, centered welcome, large composer and suggestion chips.
+        d.rectangle((0, 0, 118, 286), fill=panel)
+        d.line((118, 0, 118, 286), fill=line, width=2)
+        d.text((16, 17), "C  CLAUDE", font=font(14, True), fill=accent)
+        d.rounded_rectangle((13, 53, 104, 84), radius=7, fill=panel2, outline=line)
+        d.text((26, 64), "+ New chat", font=font(8), fill=text)
+        d.text((16, 108), "RECENTS", font=font(7, True), fill=muted)
+        d.rounded_rectangle((12, 122, 106, 150), radius=6, fill=panel2)
+        d.rectangle((12, 122, 15, 150), fill=accent)
+        d.text((24, 132), "AI Skins", font=font(8), fill=text)
+        d.text((16, 166), "Projects", font=font(8), fill=muted)
+        d.text((142, 17), name, font=font(15, True), fill=accent)
+        d.text((142, 49), "Good morning", font=font(18, True), fill=text)
+        d.text((142, 75), "How can I help you today?", font=font(9), fill=muted)
+        d.rounded_rectangle((141, 101, 593, 177), radius=13, fill=panel, outline=line)
+        d.text((159, 120), "Ask Claude anything...", font=font(9), fill=muted)
+        d.rounded_rectangle((551, 136, 581, 166), radius=8, fill=accent)
+        d.text((561, 141), "↑", font=font(12, True), fill=bg)
+        for index, label in enumerate(("Write", "Learn", "Create")):
+            left = 142 + index * 113
+            d.rounded_rectangle((left, 193, left + 98, 222), radius=13, fill=panel2, outline=line)
+            d.text((left + 30, 203), label, font=font(8), fill=text)
+        d.rounded_rectangle((142, 239, 593, 272), radius=8, fill=panel, outline=line)
+        d.text((158, 250), "AI Skins project", font=font(8, True), fill=text)
+        d.text((496, 250), "Active", font=font(8), fill=accent)
+        return im
+
     d.rectangle((0, 0, 145, 286), fill=panel)
     d.line((145, 0, 145, 286), fill=line, width=2)
-    brand = "C  CLAUDE" if platform == "claude" else "◇  CHATGPT"
-    d.text((18, 18), brand, font=font(15, True), fill=accent)
+    d.text((18, 18), "◇  CHATGPT", font=font(15, True), fill=accent)
     d.rounded_rectangle((14, 55, 130, 88), radius=7, fill=panel2, outline=line)
     d.text((27, 66), "+ New task", font=font(9), fill=text)
     d.text((18, 119), "WORKSPACE", font=font(8, True), fill=muted)
@@ -54,11 +81,10 @@ def tile(skin, signature=False, platform="chatgpt"):
     d.rectangle((13, 134, 16, 166), fill=accent)
     d.text((25, 145), "Skins", font=font(9), fill=text)
     d.text((170, 20), name, font=font(16, True), fill=accent)
-    context = "claude.ai / conversation" if platform == "claude" else "ai-skins / main"
-    d.text((170, 50), context, font=font(8), fill=muted)
+    d.text((170, 50), "ai-skins / main", font=font(8), fill=muted)
     d.rounded_rectangle((258, 78, 586, 116), radius=9, fill=panel2, outline=line)
     d.text((276, 91), "Make the workspace feel designed.", font=font(9), fill=text)
-    d.text((170, 146), "Done." if platform == "claude" else "Implemented.", font=font(11, True), fill=accent)
+    d.text((170, 146), "Implemented.", font=font(11, True), fill=accent)
     d.text((170, 168), "Theme tokens applied safely.", font=font(9), fill=text)
     d.rounded_rectangle((170, 195, 585, 258), radius=8, fill=panel, outline=line)
     d.text((186, 211), "--surface: var(--skin-panel);", font=font(8), fill=text)

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Codex Skins",
+  "version": "0.2.0",
+  "description": "Winamp-style skins and layout controls for ChatGPT Codex.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://chatgpt.com/*"],
+  "action": {
+    "default_title": "Codex Skins",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["skins.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

@@ -28,6 +28,14 @@ SKINS = [
     ("SIGNATURE 10", "CELESTIAL", "#070713", "#101024", "#1a1936", "#f2f2ff", "#9b9ab8", "#7c9dff", "#3f3d68"),
 ]
 
+SEQUENCE = [
+    "MIDNIGHT OLED", "CODEX CLASSIC", "MONOLITH", "OBSIDIAN GLASS",
+    "WINAMP INDUSTRIAL", "TOXIC EXECUTIVE", "GAME DEV DESK", "BLUEPRINT",
+    "ABYSSAL", "CELESTIAL", "NEON GRID", "SAKURA AFTER DARK",
+    "EMBER FORGE", "BAVARIAN WORKSHOP", "AMBER TERMINAL", "PAPER & INK",
+    "IVORY ATELIER", "STUDIO LIGHT", "HOLOGRAPHIC", "LIQUID CHROME",
+]
+
 def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
     return ImageFont.truetype(f"/usr/share/fonts/truetype/dejavu/{name}", size)
@@ -85,6 +93,21 @@ def frame(skin):
     d.text((211, 102), name, font=font(17, True), fill=accent)
     return im.quantize(colors=96, method=Image.Quantize.MEDIANCUT)
 
-frames = [frame(skin) for skin in SKINS]
-frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=1150, loop=0, optimize=True, disposal=2)
+by_name = {skin[1]: skin for skin in SKINS}
+keyframes = [frame(by_name[name]).convert("RGB") for name in SEQUENCE]
+frames = []
+durations = []
+
+for index, current in enumerate(keyframes):
+    following = keyframes[(index + 1) % len(keyframes)]
+    frames.append(current.quantize(colors=96, method=Image.Quantize.MEDIANCUT))
+    durations.append(760)
+    for step in range(1, 6):
+        amount = step / 6
+        eased = amount * amount * (3 - 2 * amount)
+        blend = Image.blend(current, following, eased)
+        frames.append(blend.quantize(colors=96, method=Image.Quantize.MEDIANCUT))
+        durations.append(70)
+
+frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=2)
 print(OUTPUT)

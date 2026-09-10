@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="popup.css"><title>Codex Skins</title></head>
+<body>
+  <header><div><h1>CODEX SKINS</h1><p>Dress the machine.</p></div><label class="switch"><input id="enabled" type="checkbox"><span></span></label></header>
+  <main>
+    <div id="health" class="health checking"><i></i><span>Checking this tab…</span></div>
+    <div id="skins" class="skins"></div>
+    <section class="controls">
+      <label>Density<select id="density"><option value="compact">Compact</option><option value="comfortable">Comfortable</option><option value="airy">Airy</option></select></label>
+      <label>Workspace width <output id="widthOut"></output><input id="width" type="range" min="48" max="120" step="4"></label>
+      <label>Texture intensity <output id="intensityOut"></output><input id="intensity" type="range" min="0" max="100" step="5"></label>
+    </section>
+  </main>
+  <footer><button id="reset">Reset defaults</button><span>v0.1</span></footer>
+  <script src="skins.js"></script><script src="popup.js"></script>
+</body>
+</html>

@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "screenshots" / "all-skins.gif"
 W, H = 960, 540
+OUTPUT_SIZE = (1440, 810)
 
 SKINS = [
     ("STANDARD 01", "CHATGPT CLASSIC", "#0d0d0d", "#171717", "#212121", "#f4f4f4", "#a9a9a9", "#ffffff", "#343434"),
@@ -95,7 +96,10 @@ def frame(skin, position):
     return im.quantize(colors=96, method=Image.Quantize.MEDIANCUT)
 
 by_name = {skin[1]: skin for skin in SKINS}
-keyframes = [frame(by_name[name], index + 1).convert("RGB") for index, name in enumerate(SEQUENCE)]
+keyframes = [
+    frame(by_name[name], index + 1).convert("RGB").resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
+    for index, name in enumerate(SEQUENCE)
+]
 palette_strip = Image.new("RGB", (240, 135 * len(keyframes)))
 for index, image in enumerate(keyframes):
     palette_strip.paste(image.resize((240, 135), Image.Resampling.BILINEAR), (0, index * 135))
@@ -106,13 +110,13 @@ durations = []
 for index, current in enumerate(keyframes):
     following = keyframes[(index + 1) % len(keyframes)]
     frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-    durations.append(360)
-    for step in range(1, 6):
-        amount = step / 6
+    durations.append(900)
+    for step in range(1, 9):
+        amount = step / 9
         eased = amount * amount * (3 - 2 * amount)
         blend = Image.blend(current, following, eased)
         frames.append(blend.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-        durations.append(50)
+        durations.append(80)
 
 frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=1)
 print(OUTPUT)

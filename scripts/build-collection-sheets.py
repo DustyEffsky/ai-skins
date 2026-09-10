@@ -200,6 +200,30 @@ def modern_tile(skin, platform="chatgpt"):
         for y,copy in ((83,"Build a skin that exposes its system."),(153,"TOKENS_APPLIED = TRUE")):
             d.rectangle((rail+22,y,588,y+50),outline="#777777"); d.text((rail+37,y+18),copy,font=font(8),fill=text)
         d.rectangle((rail+22,229,588,267),outline=text,width=2); d.text((rail+37,242),"INPUT_COMPONENT / READY",font=font(8),fill=text)
+    if claude:
+        # Preserve each skin's shell, then give Claude its own recognizable home composition.
+        surface = panel if layout not in ("bento", "terminal", "candy", "notes", "street", "prototype") else bg
+        left = rail + 14
+        top = 48 if layout in ("hifi", "control") else 12
+        d.rectangle((left, top, 606, 274), fill=surface)
+        d.text((555, 24), "CLAUDE", font=font(7, True), fill=accent)
+        greeting = "Good morning"
+        box = d.textbbox((0, 0), greeting, font=font(16, True))
+        d.text((left + (592-left-(box[2]-box[0]))/2, 70), greeting, font=font(16, True), fill=text)
+        prompt = "How can I help you today?"
+        box = d.textbbox((0, 0), prompt, font=font(8))
+        d.text((left + (592-left-(box[2]-box[0]))/2, 100), prompt, font=font(8), fill=accent)
+        d.rounded_rectangle((left+16, 126, 588, 190), radius=14, fill=panel2, outline=accent)
+        d.text((left+34, 146), "Ask Claude anything...", font=font(9), fill=text)
+        d.rounded_rectangle((548, 151, 578, 180), radius=8, fill=accent)
+        d.text((558, 157), "↑", font=font(11, True), fill=bg)
+        labels = ("Write", "Learn", "Create")
+        chip_w = max(70, (556-left)//3)
+        for i, label in enumerate(labels):
+            x = left + 16 + i * chip_w
+            d.rounded_rectangle((x, 210, x+chip_w-10, 240), radius=13, fill=panel2, outline=accent)
+            d.text((x+18, 220), label, font=font(8), fill=text)
+        d.text((left+18, 257), "CLAUDE HOME", font=font(7, True), fill=accent)
     return im
 
 def sheet(title, skins, filename, signature=False, platform="chatgpt"):

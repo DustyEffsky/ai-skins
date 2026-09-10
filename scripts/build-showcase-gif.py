@@ -105,7 +105,7 @@ def app_panel(d, x, skin, claude=False):
     box = d.textbbox((0, 0), platform, font=font(11, True))
     d.text((x + (pw - (box[2] - box[0])) / 2, 518), platform, font=font(11, True), fill=accent)
 
-def frame(skin, position):
+def frame(skin, position, show_title=True):
     collection, name, bg, panel, panel2, text, muted, accent, line = skin
     im = Image.new("RGB", (W, H), bg)
     if collection.startswith("SIGNATURE"):
@@ -114,22 +114,24 @@ def frame(skin, position):
         im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(75))).convert("RGB")
     d = ImageDraw.Draw(im)
     d.rectangle((0, 0, W, 56), fill=panel)
-    title_box = d.textbbox((0, 0), name, font=font(18, True))
-    d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
-    d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=muted)
+    if show_title:
+        title_box = d.textbbox((0, 0), name, font=font(18, True))
+        d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
+        d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=muted)
     app_panel(d, 12, skin)
     app_panel(d, 492, skin, claude=True)
     d.rectangle((478, 56, 482, H), fill=accent)
     return im
 
-def modern_frame(skin, position):
+def modern_frame(skin, position, show_title=True):
     name, _layout, bg, panel, _panel2, text, accent, _accent2 = skin
     im = Image.new("RGB", (W, H), bg)
     d = ImageDraw.Draw(im)
     d.rectangle((0, 0, W, 56), fill=panel)
-    title_box = d.textbbox((0, 0), name, font=font(18, True))
-    d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
-    d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=accent)
+    if show_title:
+        title_box = d.textbbox((0, 0), name, font=font(18, True))
+        d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
+        d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=accent)
     left = modern_tile(skin, "chatgpt").resize((456, 350), Image.Resampling.LANCZOS)
     right = modern_tile(skin, "claude").resize((456, 350), Image.Resampling.LANCZOS)
     im.paste(left, (12, 78))
@@ -143,21 +145,38 @@ def modern_frame(skin, position):
     return im
 
 by_name = {skin[1]: skin for skin in SKINS}
-keyframes = [(modern_frame(modern_by_name[name], index + 1) if name in modern_by_name else frame(by_name[name], index + 1)).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS) for index, name in enumerate(SEQUENCE)]
+def render_named(name, position, show_title):
+    source = modern_frame(modern_by_name[name], position, show_title) if name in modern_by_name else frame(by_name[name], position, show_title)
+    return source.resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
+
+keyframes = [render_named(name, index + 1, True) for index, name in enumerate(SEQUENCE)]
+titleless = [render_named(name, index + 1, False) for index, name in enumerate(SEQUENCE)]
 palette_strip = Image.new("RGB", (240, 135 * len(keyframes)))
 for index, image in enumerate(keyframes):
     palette_strip.paste(image.resize((240, 135), Image.Resampling.BILINEAR), (0, index * 135))
 shared_palette = palette_strip.quantize(colors=160, method=Image.Quantize.MEDIANCUT)
 frames, durations = [], []
 for index, current in enumerate(keyframes):
+    current_plain = titleless[index]
+    following_plain = titleless[(index + 1) % len(titleless)]
     following = keyframes[(index + 1) % len(keyframes)]
     frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
     durations.append(2600)
-    for step in range(1, 13):
-        amount = step / 13
+    for step in range(1, 6):
+        amount = step / 5
         eased = amount * amount * (3 - 2 * amount)
-        frames.append(Image.blend(current, following, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
+        frames.append(Image.blend(current, current_plain, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
+        durations.append(70)
+    for step in range(1, 11):
+        amount = step / 10
+        eased = amount * amount * (3 - 2 * amount)
+        frames.append(Image.blend(current_plain, following_plain, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
         durations.append(85)
+    for step in range(1, 6):
+        amount = step / 5
+        eased = amount * amount * (3 - 2 * amount)
+        frames.append(Image.blend(following_plain, following, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
+        durations.append(70)
 
 frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=1)
 print(OUTPUT)

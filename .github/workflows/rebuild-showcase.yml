@@ -36,7 +36,7 @@ jobs:
 
           path = Path("screenshots/all-30-skins-slow.gif")
           image = Image.open(path)
-          assert image.n_frames == 390, image.n_frames
+          assert image.n_frames >= 590, image.n_frames
           assert image.size == (1440, 810), image.size
           assert path.stat().st_size > 8_000_000, path.stat().st_size
           print(f"Verified {image.n_frames} frames at {image.size}, {path.stat().st_size} bytes")

@@ -67,7 +67,6 @@ def sheet(title, skins, filename, signature=False):
     canvas = Image.new("RGB", (W, H), "#0b0c0e")
     d = ImageDraw.Draw(canvas)
     d.text((70, 56), title, font=font(34, True), fill="#f4f5f7")
-    d.text((70, 106), "ALL 10 SKINS  •  TWO ABREAST", font=font(14, True), fill="#858b96")
     for index, skin in enumerate(skins):
         x = 70 + (index % 2) * 660
         y = 160 + (index // 2) * 318

@@ -51,16 +51,14 @@ def app_panel(d, x, skin, claude=False):
     d.rectangle((x, top, x + pw, H), fill=bg)
     d.rectangle((x, top, x + sidebar, bottom), fill=panel)
     d.line((x + sidebar, top, x + sidebar, bottom), fill=line)
-    brand = "C  CLAUDE" if claude else "◇  CHATGPT"
-    d.text((x + 14, 76), brand, font=font(10, True), fill=accent)
-    rr(d, (x + 10, 109, x + sidebar - 10, 139), 6, panel2, line)
-    d.text((x + 20, 119), "+ New chat", font=font(7), fill=text)
-    d.text((x + 14, 166), "RECENTS", font=font(7, True), fill=muted)
+    rr(d, (x + 10, 76, x + sidebar - 10, 106), 6, panel2, line)
+    d.text((x + 20, 86), "+ New chat", font=font(7), fill=text)
+    d.text((x + 14, 133), "RECENTS", font=font(7, True), fill=muted)
     for i, item in enumerate(("AI Skins", "Project notes", "Interface ideas")):
         if i == 0:
-            rr(d, (x + 9, 181, x + sidebar - 8, 206), 5, panel2)
-            d.rectangle((x + 9, 181, x + 12, 206), fill=accent)
-        d.text((x + 18, 189 + i * 27), item, font=font(6), fill=text if i == 0 else muted)
+            rr(d, (x + 9, 148, x + sidebar - 8, 173), 5, panel2)
+            d.rectangle((x + 9, 148, x + 12, 173), fill=accent)
+        d.text((x + 18, 156 + i * 27), item, font=font(6), fill=text if i == 0 else muted)
 
     if claude:
         cx = x + sidebar + (pw - sidebar) // 2
@@ -79,10 +77,8 @@ def app_panel(d, x, skin, claude=False):
         d.text((x + sidebar + 45, 390), "AI Skins", font=font(9, True), fill=text)
         d.text((x + sidebar + 45, 412), "Claude adapter active", font=font(7), fill=muted)
     else:
-        d.text((x + 136, 78), "AI Skins / main", font=font(9, True), fill=text)
-        d.text((x + 136, 100), name, font=font(12, True), fill=accent)
-        rr(d, (x + 210, 143, x + 433, 186), 9, panel2, line)
-        d.text((x + 225, 159), "Give this workspace a new identity.", font=font(8), fill=text)
+        rr(d, (x + 210, 112, x + 433, 155), 9, panel2, line)
+        d.text((x + 225, 128), "Give this workspace a new identity.", font=font(8), fill=text)
         d.text((x + 138, 222), "Done.", font=font(10, True), fill=accent)
         d.text((x + 138, 244), "The interface now uses the same skin tokens", font=font(8), fill=text)
         d.text((x + 138, 261), "while preserving the familiar structure.", font=font(8), fill=text)

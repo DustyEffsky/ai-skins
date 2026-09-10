@@ -44,79 +44,74 @@ def font(size, bold=False):
 def rr(draw, box, radius, fill, outline=None, width=1):
     draw.rounded_rectangle(box, radius=radius, fill=fill, outline=outline, width=width)
 
+def app_panel(d, x, label, skin, claude=False):
+    _, name, bg, panel, panel2, text, muted, accent, line = skin
+    pw = 456
+    d.rectangle((x, 72, x + pw, H), fill=bg)
+    d.rectangle((x, 72, x + 116, H), fill=panel)
+    d.line((x + 116, 72, x + 116, H), fill=line)
+    brand = "C  CLAUDE" if claude else "◇  CHATGPT"
+    d.text((x + 14, 92), brand, font=font(11, True), fill=accent)
+    rr(d, (x + 12, 126, x + 104, 156), 6, panel2, line)
+    d.text((x + 24, 136), "+  New chat", font=font(8), fill=text)
+    d.text((x + 14, 184), "RECENTS", font=font(7, True), fill=muted)
+    for i, item in enumerate(("AI Skins", "Project notes", "Interface ideas")):
+        if i == 0:
+            rr(d, (x + 10, 199, x + 107, 224), 5, panel2)
+            d.rectangle((x + 10, 199, x + 13, 224), fill=accent)
+        d.text((x + 20, 207 + i * 28), item, font=font(7), fill=text if i == 0 else muted)
+    d.text((x + 14, 508), "●  Skin active", font=font(7), fill=accent)
+    d.text((x + 136, 94), label, font=font(10, True), fill=text)
+    d.text((x + 136, 116), name, font=font(13, True), fill=accent)
+    rr(d, (x + 210, 155, x + 433, 198), 9, panel2, line)
+    d.text((x + 225, 171), "Give this workspace a new identity.", font=font(8), fill=text)
+    d.text((x + 138, 234), "Done.", font=font(10, True), fill=accent)
+    d.text((x + 138, 256), "The interface now uses the same skin tokens", font=font(8), fill=text)
+    d.text((x + 138, 273), "while preserving the app's familiar structure.", font=font(8), fill=text)
+    rr(d, (x + 138, 306, x + 432, 393), 8, panel, line)
+    d.rectangle((x + 139, 307, x + 431, 331), fill=panel2)
+    d.text((x + 151, 315), "theme adapter", font=font(7), fill=muted)
+    d.text((x + 151, 348), "--surface: var(--skin-panel);", font=font(7), fill=text)
+    d.text((x + 151, 369), f"--accent: {accent};", font=font(7), fill=accent)
+    rr(d, (x + 132, 441, x + 438, 493), 12, panel, line)
+    d.text((x + 150, 461), "Reply to Claude..." if claude else "Message ChatGPT...", font=font(8), fill=muted)
+    rr(d, (x + 402, 451, x + 428, 483), 8, accent)
+    d.text((x + 411, 458), "↑", font=font(12, True), fill=bg)
+
 def frame(skin, position):
     collection, name, bg, panel, panel2, text, muted, accent, line = skin
     im = Image.new("RGB", (W, H), bg)
-    d = ImageDraw.Draw(im)
-    # Soft signature light without changing the actual palette.
     if collection.startswith("SIGNATURE"):
         glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        gd = ImageDraw.Draw(glow)
-        gd.ellipse((620, -180, 1100, 300), fill=accent + "38")
-        im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(70))).convert("RGB")
-        d = ImageDraw.Draw(im)
-    d.rectangle((0, 0, W, 42), fill=panel)
-    d.text((20, 13), "CHATGPT + CODEX SKINS", font=font(13, True), fill=accent)
-    counter = f"{position:02d}/20  {collection}"
-    d.text((W - 205, 14), counter, font=font(10, True), fill=muted)
-    # Sidebar.
-    d.rectangle((0, 42, 188, H), fill=panel)
-    d.line((188, 42, 188, H), fill=line)
-    d.text((20, 67), "◇  CODEX", font=font(15, True), fill=accent)
-    rr(d, (16, 103, 172, 139), 7, panel2, line)
-    d.text((29, 115), "+  New task", font=font(10), fill=text)
-    d.text((20, 174), "WORKSPACE", font=font(9, True), fill=muted)
-    rr(d, (15, 190, 173, 224), 6, panel2)
-    d.rectangle((15, 190, 18, 224), fill=accent)
-    d.text((29, 201), "ChatGPT Skins", font=font(10), fill=text)
-    for i, label in enumerate(("Leafstream", "AUNOZ", "Controller support")):
-        d.text((29, 247 + i * 31), label, font=font(10), fill=muted)
-    d.text((20, 506), "●  Extension connected", font=font(9), fill=accent)
-    # Header and conversation.
-    d.line((188, 86, W, 86), fill=line)
-    d.text((216, 59), "codex-skins / main", font=font(10), fill=text)
-    d.ellipse((W - 32, 62, W - 24, 70), fill=accent)
-    rr(d, (448, 121, 906, 174), 11, panel2, line)
-    d.text((471, 140), "Make this interface feel genuinely designed.", font=font(12), fill=text)
-    d.text((226, 215), "Implemented.", font=font(13, True), fill=accent)
-    d.text((226, 243), "The palette, surfaces, typography and atmosphere now", font=font(11), fill=text)
-    d.text((226, 263), "change together while the workspace remains familiar.", font=font(11), fill=text)
-    rr(d, (226, 298, 904, 415), 10, panel, line)
-    d.rectangle((227, 299, 903, 328), fill=panel2)
-    d.text((244, 308), "content.css", font=font(9), fill=muted)
-    d.text((246, 348), ':root[data-codex-skins="on"] {', font=font(10), fill=accent)
-    d.text((265, 370), "--main-surface-primary: var(--cs-bg);", font=font(10), fill=text)
-    d.text((265, 392), "--text-primary: var(--cs-text);", font=font(10), fill=text)
-    rr(d, (220, 458, 913, 511), 13, panel, line)
-    d.text((242, 478), "Ask Codex to refine this skin...", font=font(10), fill=muted)
-    rr(d, (864, 469, 900, 501), 9, accent)
-    d.text((877, 475), "↑", font=font(15, True), fill=bg)
-    # Large skin identity.
-    d.text((211, 102), name, font=font(17, True), fill=accent)
-    return im.quantize(colors=96, method=Image.Quantize.MEDIANCUT)
+        ImageDraw.Draw(glow).ellipse((570, -220, 1080, 270), fill=accent + "32")
+        im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(75))).convert("RGB")
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, W, 72), fill=panel)
+    d.text((20, 14), "AI SKINS", font=font(16, True), fill=accent)
+    d.text((20, 40), "CHATGPT + CODEX + CLAUDE", font=font(8, True), fill=muted)
+    d.text((315, 22), name, font=font(18, True), fill=text)
+    d.text((815, 25), f"{position:02d}/20", font=font(10, True), fill=accent)
+    app_panel(d, 12, "CHATGPT / CODEX", skin)
+    app_panel(d, 492, "CLAUDE", skin, claude=True)
+    d.rectangle((478, 72, 482, H), fill=accent)
+    return im
 
 by_name = {skin[1]: skin for skin in SKINS}
-keyframes = [
-    frame(by_name[name], index + 1).convert("RGB").resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
-    for index, name in enumerate(SEQUENCE)
-]
+keyframes = [frame(by_name[name], index + 1).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS) for index, name in enumerate(SEQUENCE)]
 palette_strip = Image.new("RGB", (240, 135 * len(keyframes)))
 for index, image in enumerate(keyframes):
     palette_strip.paste(image.resize((240, 135), Image.Resampling.BILINEAR), (0, index * 135))
-shared_palette = palette_strip.quantize(colors=128, method=Image.Quantize.MEDIANCUT)
-frames = []
-durations = []
-
+shared_palette = palette_strip.quantize(colors=160, method=Image.Quantize.MEDIANCUT)
+frames, durations = [], []
 for index, current in enumerate(keyframes):
     following = keyframes[(index + 1) % len(keyframes)]
     frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-    durations.append(1500)
+    durations.append(1800)
     for step in range(1, 9):
         amount = step / 9
         eased = amount * amount * (3 - 2 * amount)
-        blend = Image.blend(current, following, eased)
-        frames.append(blend.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-        durations.append(80)
+        frames.append(Image.blend(current, following, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
+        durations.append(90)
 
 frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=1)
 print(OUTPUT)

@@ -35,7 +35,7 @@ def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
     return ImageFont.truetype(f"/usr/share/fonts/truetype/dejavu/{name}", size)
 
-def tile(skin, signature=False):
+def tile(skin, signature=False, platform="chatgpt"):
     name, bg, panel, panel2, text, muted, accent, line = skin
     im = Image.new("RGB", (620, 286), bg)
     if signature:
@@ -45,7 +45,8 @@ def tile(skin, signature=False):
     d = ImageDraw.Draw(im)
     d.rectangle((0, 0, 145, 286), fill=panel)
     d.line((145, 0, 145, 286), fill=line, width=2)
-    d.text((18, 18), "◇  CHATGPT", font=font(15, True), fill=accent)
+    brand = "C  CLAUDE" if platform == "claude" else "◇  CHATGPT"
+    d.text((18, 18), brand, font=font(15, True), fill=accent)
     d.rounded_rectangle((14, 55, 130, 88), radius=7, fill=panel2, outline=line)
     d.text((27, 66), "+ New task", font=font(9), fill=text)
     d.text((18, 119), "WORKSPACE", font=font(8, True), fill=muted)
@@ -53,26 +54,29 @@ def tile(skin, signature=False):
     d.rectangle((13, 134, 16, 166), fill=accent)
     d.text((25, 145), "Skins", font=font(9), fill=text)
     d.text((170, 20), name, font=font(16, True), fill=accent)
-    d.text((170, 50), "chatgpt-codex-skins / main", font=font(8), fill=muted)
+    context = "claude.ai / conversation" if platform == "claude" else "ai-skins / main"
+    d.text((170, 50), context, font=font(8), fill=muted)
     d.rounded_rectangle((258, 78, 586, 116), radius=9, fill=panel2, outline=line)
     d.text((276, 91), "Make the workspace feel designed.", font=font(9), fill=text)
-    d.text((170, 146), "Implemented.", font=font(11, True), fill=accent)
+    d.text((170, 146), "Done." if platform == "claude" else "Implemented.", font=font(11, True), fill=accent)
     d.text((170, 168), "Theme tokens applied safely.", font=font(9), fill=text)
     d.rounded_rectangle((170, 195, 585, 258), radius=8, fill=panel, outline=line)
     d.text((186, 211), "--surface: var(--skin-panel);", font=font(8), fill=text)
     d.text((186, 233), f"--accent: {accent};", font=font(8), fill=accent)
     return im
 
-def sheet(title, skins, filename, signature=False):
+def sheet(title, skins, filename, signature=False, platform="chatgpt"):
     canvas = Image.new("RGB", (W, H), "#0b0c0e")
     d = ImageDraw.Draw(canvas)
     d.text((70, 56), title, font=font(34, True), fill="#f4f5f7")
     for index, skin in enumerate(skins):
         x = 70 + (index % 2) * 660
         y = 160 + (index // 2) * 318
-        canvas.paste(tile(skin, signature), (x, y))
+        canvas.paste(tile(skin, signature, platform), (x, y))
     canvas.save(OUT / filename, optimize=True)
 
 sheet("STANDARD COLLECTION", STANDARD, "standard-collection.png")
 sheet("SIGNATURE COLLECTION", SIGNATURE, "signature-collection.png", signature=True)
+sheet("CLAUDE / STANDARD COLLECTION", STANDARD, "claude-standard-collection.png", platform="claude")
+sheet("CLAUDE / SIGNATURE COLLECTION", SIGNATURE, "claude-signature-collection.png", signature=True, platform="claude")
 print("collection sheets built")

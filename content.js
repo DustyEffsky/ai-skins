@@ -2,10 +2,17 @@
   const DEFAULTS = { enabled: true, skin: "classic", density: "comfortable", width: 92, intensity: 100 };
   const ROOT_MARKER = "data-codex-skins";
 
+  function platform() {
+    if (location.hostname === "claude.ai") return "claude";
+    if (location.hostname === "chatgpt.com") return "chatgpt";
+    return "unsupported";
+  }
+
   function apply(settings) {
     const root = document.documentElement;
     const skin = CODEX_SKINS.find(item => item.id === settings.skin) || CODEX_SKINS[0];
     root.dataset.codexSkins = settings.enabled ? "on" : "off";
+    root.dataset.codexPlatform = platform();
     root.dataset.codexSkin = skin.id;
     root.dataset.codexDensity = settings.density;
     for (const [key, value] of Object.entries(skin.vars)) root.style.setProperty(`--cs-${key}`, value);
@@ -35,6 +42,6 @@
 
   chrome.runtime.onMessage.addListener((message, _sender, reply) => {
     if (message?.type !== "CODEX_SKINS_HEALTH") return;
-    reply({ ok: true, active: document.documentElement.dataset.codexSkins === "on", skin: document.documentElement.dataset.codexSkin || null, version: chrome.runtime.getManifest().version });
+    reply({ ok: true, active: document.documentElement.dataset.codexSkins === "on", skin: document.documentElement.dataset.codexSkin || null, platform: platform(), version: chrome.runtime.getManifest().version });
   });
 })();

@@ -1,14 +1,18 @@
-# ChatGPT + Codex Skins
+# AI Skins
 
-A Winamp-inspired skin system for ChatGPT and Codex workspaces. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how ChatGPT works.
+A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how the underlying apps work.
 
-> Unofficial community project. Not affiliated with or endorsed by OpenAI. ChatGPT and Codex are trademarks of their respective owner.
+> Unofficial community project. Not affiliated with or endorsed by OpenAI or Anthropic. ChatGPT, Codex, and Claude are trademarks of their respective owners.
 
-![Slow animated preview cycling through all 20 ChatGPT and Codex Skins](screenshots/all-20-skins-slow.gif)
+![Slow split-screen preview cycling through all 20 AI Skins on ChatGPT, Codex, and Claude](screenshots/all-20-skins-slow.gif)
 
 ![All ten Standard skins arranged two abreast](screenshots/standard-collection.png)
 
 ![All ten Signature skins arranged two abreast](screenshots/signature-collection.png)
+
+![All ten Standard skins shown on Claude](screenshots/claude-standard-collection.png)
+
+![All ten Signature skins shown on Claude](screenshots/claude-signature-collection.png)
 
 ## What it does
 
@@ -26,7 +30,7 @@ A Winamp-inspired skin system for ChatGPT and Codex workspaces. Switch between 2
 2. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
 3. Enable **Developer mode**.
 4. Choose **Load unpacked** and select the `codex-skins` folder.
-5. Open or refresh `https://chatgpt.com`, then click the extension icon.
+5. Open or refresh `https://chatgpt.com` or `https://claude.ai`, then click the extension icon.
 
 ## Included skins: Standard
 
@@ -58,15 +62,15 @@ Each skin can be combined with Compact, Comfortable, or Airy density, a custom w
 
 ## Safety and limitations
 
-- The extension runs only on `chatgpt.com` and stores preferences locally.
+- The extension runs only on `chatgpt.com` and `claude.ai` and stores preferences locally.
 - It requests no browsing-history, network, or account permissions.
-- ChatGPT interface updates can change internal layout selectors. The theme relies primarily on semantic CSS variables to reduce breakage.
+- Interface updates can change internal layout selectors. Separate platform adapters rely primarily on semantic CSS variables to reduce breakage and isolate failures.
 - Turn the master switch off to immediately restore the original appearance.
-- The popup reports whether the extension is connected to the current ChatGPT tab.
+- The popup reports whether the extension is connected to the current ChatGPT, Codex, or Claude tab.
 
 ## Compatibility policy
 
-The base palette layer uses shared CSS variables. Optional layout adjustments use broad semantic selectors and fail independently. Generated class names are deliberately avoided. Compatibility reports are welcome through the included GitHub issue template.
+The base palette layer uses shared CSS variables. ChatGPT and Claude compatibility rules are isolated by platform. Optional layout adjustments use broad semantic selectors and fail independently. Generated class names are deliberately avoided. Compatibility reports are welcome through the included GitHub issue template.
 
 ## Development
 

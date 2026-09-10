@@ -39,9 +39,13 @@ chrome.tabs.query({active:true,currentWindow:true}, tabs => {
   const tab = tabs[0];
   const health = $("health");
   const setHealth = (kind, value) => { health.className = `health ${kind}`; health.querySelector("span").textContent = value; };
-  if (!tab?.url?.startsWith("https://chatgpt.com/")) return setHealth("warn", "Open ChatGPT to preview skins");
+  const supported = tab?.url?.startsWith("https://chatgpt.com/") || tab?.url?.startsWith("https://claude.ai/");
+  if (!supported) return setHealth("warn", "Open ChatGPT, Codex, or Claude to preview skins");
   chrome.tabs.sendMessage(tab.id, {type:"CODEX_SKINS_HEALTH"}, response => {
-    if (chrome.runtime.lastError || !response?.ok) setHealth("warn", "Refresh ChatGPT after installation");
-    else setHealth("ok", `Connected · ${response.skin || "original"}`);
+    if (chrome.runtime.lastError || !response?.ok) setHealth("warn", "Refresh this page after installation");
+    else {
+      const label = response.platform === "claude" ? "Claude" : "ChatGPT / Codex";
+      setHealth("ok", `${label} connected · ${response.skin || "original"}`);
+    }
   });
 });

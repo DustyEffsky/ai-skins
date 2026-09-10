@@ -1,6 +1,6 @@
 # Contributing
 
-ChatGPT + Codex Skins is intentionally conservative: a broken enhancement should disappear, never make ChatGPT unusable.
+AI Skins is intentionally conservative: a broken enhancement should disappear, never make a supported app unusable.
 
 ## Skin contributions
 
@@ -12,6 +12,7 @@ ChatGPT + Codex Skins is intentionally conservative: a broken enhancement should
 ## Compatibility fixes
 
 - Do not target generated or obfuscated class names.
+- Keep platform-specific rules scoped to the matching `data-codex-platform` value.
 - Prefer semantic elements, ARIA roles, stable data attributes, and shared CSS variables.
 - Keep every rule under the master root attribute so the switch is a true kill switch.
 - Test the original appearance after switching the extension off.

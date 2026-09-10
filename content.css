@@ -13,6 +13,31 @@
   font-family: var(--cs-font) !important;
 }
 
+/* Claude adapter. Claude's palette tokens are overridden only on claude.ai. */
+:root[data-codex-skins="on"][data-codex-platform="claude"] {
+  --bg-000: var(--cs-bg) !important;
+  --bg-100: var(--cs-panel) !important;
+  --bg-200: var(--cs-panel2) !important;
+  --bg-300: var(--cs-line) !important;
+  --text-000: var(--cs-text) !important;
+  --text-100: var(--cs-text) !important;
+  --text-200: var(--cs-muted) !important;
+  --text-300: var(--cs-muted) !important;
+  --border-100: var(--cs-line) !important;
+  --border-200: var(--cs-line) !important;
+  --accent-main-000: var(--cs-accent) !important;
+  --accent-main-100: var(--cs-accent) !important;
+}
+
+:root[data-codex-skins="on"][data-codex-platform="claude"] aside,
+:root[data-codex-skins="on"][data-codex-platform="claude"] nav { background-color: var(--cs-panel) !important; }
+:root[data-codex-skins="on"][data-codex-platform="claude"] [role="dialog"],
+:root[data-codex-skins="on"][data-codex-platform="claude"] [role="menu"],
+:root[data-codex-skins="on"][data-codex-platform="claude"] [data-radix-popper-content-wrapper] > * { background-color: var(--cs-panel) !important; color: var(--cs-text) !important; border-color: var(--cs-line) !important; }
+:root[data-codex-skins="on"][data-codex-platform="claude"] pre,
+:root[data-codex-skins="on"][data-codex-platform="claude"] code { border-color: var(--cs-line) !important; }
+:root[data-codex-skins="on"][data-codex-platform="claude"] main > div { border-color: var(--cs-line); }
+
 :root[data-codex-skins="on"] body,
 :root[data-codex-skins="on"] main,
 :root[data-codex-skins="on"] #__next { background-color: var(--cs-bg) !important; color: var(--cs-text) !important; }

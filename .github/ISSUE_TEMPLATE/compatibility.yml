@@ -1,0 +1,37 @@
+name: Compatibility problem
+description: Report a ChatGPT UI change that affects a skin
+title: "[Compatibility]: "
+labels: [compatibility]
+body:
+  - type: markdown
+    attributes:
+      value: Please crop or redact private conversation content from screenshots.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+    validations:
+      required: true
+  - type: input
+    id: extension
+    attributes:
+      label: Codex Skins version
+    validations:
+      required: true
+  - type: dropdown
+    id: skin
+    attributes:
+      label: Affected skin
+      options: [All skins, Codex Classic, Winamp Industrial, Amber Terminal, Neon Grid, Paper & Ink, Blueprint, Studio Light, Game Dev Desk, Midnight OLED, Bavarian Workshop]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: What happened and how can we reproduce it?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?

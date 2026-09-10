@@ -1,14 +1,14 @@
-# ChatGPT Skins
+# ChatGPT + Codex Skins
 
 <p align="center">
   <img src="icons/icon-128.png" width="128" height="128" alt="ChatGPT Skins icon">
 </p>
 
-A Winamp-inspired skin system for ChatGPT. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how ChatGPT works.
+A Winamp-inspired skin system for ChatGPT and Codex workspaces. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how ChatGPT works.
 
 > Unofficial community project. Not affiliated with or endorsed by OpenAI. ChatGPT and Codex are trademarks of their respective owner.
 
-![Animated preview cycling through all 20 ChatGPT Skins](screenshots/all-skins.gif)
+![Animated preview cycling through all 20 ChatGPT and Codex Skins](screenshots/all-skins.gif)
 
 ![Standard collection: Winamp Industrial, Paper and Ink, Blueprint, and Bavarian Workshop](screenshots/standard-collection.svg)
 

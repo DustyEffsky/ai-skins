@@ -55,7 +55,7 @@ def frame(skin, position):
         im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(70))).convert("RGB")
         d = ImageDraw.Draw(im)
     d.rectangle((0, 0, W, 42), fill=panel)
-    d.text((20, 13), "CHATGPT SKINS", font=font(13, True), fill=accent)
+    d.text((20, 13), "CHATGPT + CODEX SKINS", font=font(13, True), fill=accent)
     counter = f"{position:02d}/20  {collection}"
     d.text((W - 205, 14), counter, font=font(10, True), fill=muted)
     # Sidebar.

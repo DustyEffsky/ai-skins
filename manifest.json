@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT Skins",
+  "name": "ChatGPT + Codex Skins",
   "version": "0.3.0",
-  "description": "Winamp-style skins and layout controls for ChatGPT.",
+  "description": "Winamp-style skins and layout controls for ChatGPT and Codex workspaces.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
@@ -12,7 +12,7 @@
   "permissions": ["storage", "activeTab"],
   "host_permissions": ["https://chatgpt.com/*"],
   "action": {
-    "default_title": "ChatGPT Skins",
+    "default_title": "ChatGPT + Codex Skins",
     "default_icon": {
       "16": "icons/icon-16.png",
       "32": "icons/icon-32.png",

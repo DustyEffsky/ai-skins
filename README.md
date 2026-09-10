@@ -1,12 +1,14 @@
 # Codex Skins
 
-A Winamp-inspired skin system for ChatGPT Codex. Switch between 20 complete visual identities—from restrained productivity themes to glass, chrome, neon and editorial treatments—without changing how Codex works.
+A Winamp-inspired skin system for ChatGPT Codex. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how Codex works.
 
 > Unofficial community project. Not affiliated with or endorsed by OpenAI. ChatGPT and Codex are trademarks of their respective owner.
 
 ![Standard collection: Winamp Industrial, Paper and Ink, Blueprint, and Bavarian Workshop](screenshots/standard-collection.svg)
 
 ![Signature collection: Obsidian Glass, Sakura After Dark, Ivory Atelier, and Holographic](screenshots/signature-collection.svg)
+
+![Animated preview cycling through all 20 Codex Skins](screenshots/all-skins.gif)
 
 ## What it does
 
@@ -26,7 +28,7 @@ A Winamp-inspired skin system for ChatGPT Codex. Switch between 20 complete visu
 4. Choose **Load unpacked** and select the `codex-skins` folder.
 5. Open or refresh `https://chatgpt.com`, then click the extension icon.
 
-## Included skins — Standard
+## Included skins: Standard
 
 1. Codex Classic
 2. Winamp Industrial
@@ -39,7 +41,7 @@ A Winamp-inspired skin system for ChatGPT Codex. Switch between 20 complete visu
 9. Midnight OLED
 10. Bavarian Workshop
 
-## Included skins — Signature
+## Included skins: Signature
 
 1. Obsidian Glass
 2. Liquid Chrome

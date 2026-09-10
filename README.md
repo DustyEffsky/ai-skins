@@ -4,7 +4,7 @@ A Winamp-inspired skin system for ChatGPT and Codex workspaces. Switch between 2
 
 > Unofficial community project. Not affiliated with or endorsed by OpenAI. ChatGPT and Codex are trademarks of their respective owner.
 
-![Animated preview cycling through all 20 ChatGPT and Codex Skins](screenshots/all-skins.gif)
+![Slow animated preview cycling through all 20 ChatGPT and Codex Skins](screenshots/all-20-skins-slow.gif)
 
 ![All ten Standard skins arranged two abreast](screenshots/standard-collection.png)
 

@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "screenshots" / "all-skins.gif"
+OUTPUT = ROOT / "screenshots" / "all-20-skins-slow.gif"
 W, H = 960, 540
 OUTPUT_SIZE = (1440, 810)
 
@@ -110,7 +110,7 @@ durations = []
 for index, current in enumerate(keyframes):
     following = keyframes[(index + 1) % len(keyframes)]
     frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-    durations.append(900)
+    durations.append(1500)
     for step in range(1, 9):
         amount = step / 9
         eased = amount * amount * (3 - 2 * amount)

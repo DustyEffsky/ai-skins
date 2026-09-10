@@ -6,7 +6,7 @@ OUTPUT = ROOT / "screenshots" / "all-skins.gif"
 W, H = 960, 540
 
 SKINS = [
-    ("STANDARD 01", "CODEX CLASSIC", "#0d0d0d", "#171717", "#212121", "#f4f4f4", "#a9a9a9", "#ffffff", "#343434"),
+    ("STANDARD 01", "CHATGPT CLASSIC", "#0d0d0d", "#171717", "#212121", "#f4f4f4", "#a9a9a9", "#ffffff", "#343434"),
     ("STANDARD 02", "WINAMP INDUSTRIAL", "#0b0d0e", "#1b1f22", "#2a3034", "#d9e0d1", "#8c9789", "#92ff36", "#596068"),
     ("STANDARD 03", "AMBER TERMINAL", "#090603", "#100b05", "#191006", "#ffd27a", "#aa7732", "#ffb000", "#5c3c00"),
     ("STANDARD 04", "NEON GRID", "#09051a", "#130b2b", "#201044", "#f8edff", "#a99bbd", "#42e8ff", "#62378b"),
@@ -29,7 +29,7 @@ SKINS = [
 ]
 
 SEQUENCE = [
-    "MIDNIGHT OLED", "CODEX CLASSIC", "MONOLITH", "OBSIDIAN GLASS",
+    "MIDNIGHT OLED", "CHATGPT CLASSIC", "MONOLITH", "OBSIDIAN GLASS",
     "WINAMP INDUSTRIAL", "TOXIC EXECUTIVE", "GAME DEV DESK", "BLUEPRINT",
     "ABYSSAL", "CELESTIAL", "NEON GRID", "SAKURA AFTER DARK",
     "EMBER FORGE", "BAVARIAN WORKSHOP", "AMBER TERMINAL", "PAPER & INK",
@@ -43,7 +43,7 @@ def font(size, bold=False):
 def rr(draw, box, radius, fill, outline=None, width=1):
     draw.rounded_rectangle(box, radius=radius, fill=fill, outline=outline, width=width)
 
-def frame(skin):
+def frame(skin, position):
     collection, name, bg, panel, panel2, text, muted, accent, line = skin
     im = Image.new("RGB", (W, H), bg)
     d = ImageDraw.Draw(im)
@@ -55,8 +55,9 @@ def frame(skin):
         im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(70))).convert("RGB")
         d = ImageDraw.Draw(im)
     d.rectangle((0, 0, W, 42), fill=panel)
-    d.text((20, 13), "CODEX SKINS", font=font(13, True), fill=accent)
-    d.text((W - 136, 14), collection, font=font(10, True), fill=muted)
+    d.text((20, 13), "CHATGPT SKINS", font=font(13, True), fill=accent)
+    counter = f"{position:02d}/20  {collection}"
+    d.text((W - 205, 14), counter, font=font(10, True), fill=muted)
     # Sidebar.
     d.rectangle((0, 42, 188, H), fill=panel)
     d.line((188, 42, 188, H), fill=line)
@@ -66,7 +67,7 @@ def frame(skin):
     d.text((20, 174), "WORKSPACE", font=font(9, True), fill=muted)
     rr(d, (15, 190, 173, 224), 6, panel2)
     d.rectangle((15, 190, 18, 224), fill=accent)
-    d.text((29, 201), "Codex Skins", font=font(10), fill=text)
+    d.text((29, 201), "ChatGPT Skins", font=font(10), fill=text)
     for i, label in enumerate(("Leafstream", "AUNOZ", "Controller support")):
         d.text((29, 247 + i * 31), label, font=font(10), fill=muted)
     d.text((20, 506), "●  Extension connected", font=font(9), fill=accent)
@@ -94,20 +95,24 @@ def frame(skin):
     return im.quantize(colors=96, method=Image.Quantize.MEDIANCUT)
 
 by_name = {skin[1]: skin for skin in SKINS}
-keyframes = [frame(by_name[name]).convert("RGB") for name in SEQUENCE]
+keyframes = [frame(by_name[name], index + 1).convert("RGB") for index, name in enumerate(SEQUENCE)]
+palette_strip = Image.new("RGB", (240, 135 * len(keyframes)))
+for index, image in enumerate(keyframes):
+    palette_strip.paste(image.resize((240, 135), Image.Resampling.BILINEAR), (0, index * 135))
+shared_palette = palette_strip.quantize(colors=128, method=Image.Quantize.MEDIANCUT)
 frames = []
 durations = []
 
 for index, current in enumerate(keyframes):
     following = keyframes[(index + 1) % len(keyframes)]
-    frames.append(current.quantize(colors=96, method=Image.Quantize.MEDIANCUT))
-    durations.append(760)
+    frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
+    durations.append(360)
     for step in range(1, 6):
         amount = step / 6
         eased = amount * amount * (3 - 2 * amount)
         blend = Image.blend(current, following, eased)
-        frames.append(blend.quantize(colors=96, method=Image.Quantize.MEDIANCUT))
-        durations.append(70)
+        frames.append(blend.quantize(palette=shared_palette, dither=Image.Dither.NONE))
+        durations.append(50)
 
-frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=2)
+frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=1)
 print(OUTPUT)

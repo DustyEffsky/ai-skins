@@ -1,6 +1,6 @@
 # Contributing
 
-Codex Skins is intentionally conservative: a broken enhancement should disappear, never make ChatGPT unusable.
+ChatGPT Skins is intentionally conservative: a broken enhancement should disappear, never make ChatGPT unusable.
 
 ## Skin contributions
 

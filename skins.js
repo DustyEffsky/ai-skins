@@ -1,7 +1,7 @@
 const CODEX_SKINS = [
   {
     id: "classic",
-    name: "Codex Classic",
+    name: "ChatGPT Classic",
     note: "The original, tightened up",
     swatches: ["#0d0d0d", "#212121", "#ffffff"],
     dark: true,

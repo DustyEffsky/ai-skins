@@ -44,39 +44,63 @@ def font(size, bold=False):
 def rr(draw, box, radius, fill, outline=None, width=1):
     draw.rounded_rectangle(box, radius=radius, fill=fill, outline=outline, width=width)
 
-def app_panel(d, x, label, skin, claude=False):
+def app_panel(d, x, skin, claude=False):
     _, name, bg, panel, panel2, text, muted, accent, line = skin
-    pw = 456
-    d.rectangle((x, 72, x + pw, H), fill=bg)
-    d.rectangle((x, 72, x + 116, H), fill=panel)
-    d.line((x + 116, 72, x + 116, H), fill=line)
+    pw, top, bottom = 456, 56, 508
+    sidebar = 98 if claude else 116
+    d.rectangle((x, top, x + pw, H), fill=bg)
+    d.rectangle((x, top, x + sidebar, bottom), fill=panel)
+    d.line((x + sidebar, top, x + sidebar, bottom), fill=line)
     brand = "C  CLAUDE" if claude else "◇  CHATGPT"
-    d.text((x + 14, 92), brand, font=font(11, True), fill=accent)
-    rr(d, (x + 12, 126, x + 104, 156), 6, panel2, line)
-    d.text((x + 24, 136), "+  New chat", font=font(8), fill=text)
-    d.text((x + 14, 184), "RECENTS", font=font(7, True), fill=muted)
+    d.text((x + 14, 76), brand, font=font(10, True), fill=accent)
+    rr(d, (x + 10, 109, x + sidebar - 10, 139), 6, panel2, line)
+    d.text((x + 20, 119), "+ New chat", font=font(7), fill=text)
+    d.text((x + 14, 166), "RECENTS", font=font(7, True), fill=muted)
     for i, item in enumerate(("AI Skins", "Project notes", "Interface ideas")):
         if i == 0:
-            rr(d, (x + 10, 199, x + 107, 224), 5, panel2)
-            d.rectangle((x + 10, 199, x + 13, 224), fill=accent)
-        d.text((x + 20, 207 + i * 28), item, font=font(7), fill=text if i == 0 else muted)
-    d.text((x + 14, 508), "●  Skin active", font=font(7), fill=accent)
-    d.text((x + 136, 94), label, font=font(10, True), fill=text)
-    d.text((x + 136, 116), name, font=font(13, True), fill=accent)
-    rr(d, (x + 210, 155, x + 433, 198), 9, panel2, line)
-    d.text((x + 225, 171), "Give this workspace a new identity.", font=font(8), fill=text)
-    d.text((x + 138, 234), "Done.", font=font(10, True), fill=accent)
-    d.text((x + 138, 256), "The interface now uses the same skin tokens", font=font(8), fill=text)
-    d.text((x + 138, 273), "while preserving the app's familiar structure.", font=font(8), fill=text)
-    rr(d, (x + 138, 306, x + 432, 393), 8, panel, line)
-    d.rectangle((x + 139, 307, x + 431, 331), fill=panel2)
-    d.text((x + 151, 315), "theme adapter", font=font(7), fill=muted)
-    d.text((x + 151, 348), "--surface: var(--skin-panel);", font=font(7), fill=text)
-    d.text((x + 151, 369), f"--accent: {accent};", font=font(7), fill=accent)
-    rr(d, (x + 132, 441, x + 438, 493), 12, panel, line)
-    d.text((x + 150, 461), "Reply to Claude..." if claude else "Message ChatGPT...", font=font(8), fill=muted)
-    rr(d, (x + 402, 451, x + 428, 483), 8, accent)
-    d.text((x + 411, 458), "↑", font=font(12, True), fill=bg)
+            rr(d, (x + 9, 181, x + sidebar - 8, 206), 5, panel2)
+            d.rectangle((x + 9, 181, x + 12, 206), fill=accent)
+        d.text((x + 18, 189 + i * 27), item, font=font(6), fill=text if i == 0 else muted)
+
+    if claude:
+        cx = x + sidebar + (pw - sidebar) // 2
+        d.text((cx - 72, 112), "Good morning", font=font(16, True), fill=text)
+        d.text((cx - 91, 141), "How can I help you today?", font=font(9), fill=muted)
+        rr(d, (x + sidebar + 28, 180, x + pw - 24, 264), 14, panel, line)
+        d.text((x + sidebar + 47, 202), "Ask Claude anything...", font=font(9), fill=muted)
+        rr(d, (x + pw - 63, 223, x + pw - 34, 253), 8, accent)
+        d.text((x + pw - 53, 229), "↑", font=font(12, True), fill=bg)
+        for i, option in enumerate(("Write", "Learn", "Create")):
+            left = x + sidebar + 29 + i * 91
+            rr(d, (left, 284, left + 78, 312), 12, panel2, line)
+            d.text((left + 20, 294), option, font=font(7), fill=text)
+        d.text((x + sidebar + 31, 346), "Projects", font=font(9, True), fill=accent)
+        rr(d, (x + sidebar + 28, 370, x + pw - 24, 435), 9, panel, line)
+        d.text((x + sidebar + 45, 390), "AI Skins", font=font(9, True), fill=text)
+        d.text((x + sidebar + 45, 412), "Claude adapter active", font=font(7), fill=muted)
+    else:
+        d.text((x + 136, 78), "AI Skins / main", font=font(9, True), fill=text)
+        d.text((x + 136, 100), name, font=font(12, True), fill=accent)
+        rr(d, (x + 210, 143, x + 433, 186), 9, panel2, line)
+        d.text((x + 225, 159), "Give this workspace a new identity.", font=font(8), fill=text)
+        d.text((x + 138, 222), "Done.", font=font(10, True), fill=accent)
+        d.text((x + 138, 244), "The interface now uses the same skin tokens", font=font(8), fill=text)
+        d.text((x + 138, 261), "while preserving the familiar structure.", font=font(8), fill=text)
+        rr(d, (x + 138, 294, x + 432, 381), 8, panel, line)
+        d.rectangle((x + 139, 295, x + 431, 319), fill=panel2)
+        d.text((x + 151, 303), "theme adapter", font=font(7), fill=muted)
+        d.text((x + 151, 336), "--surface: var(--skin-panel);", font=font(7), fill=text)
+        d.text((x + 151, 357), f"--accent: {accent};", font=font(7), fill=accent)
+        rr(d, (x + 132, 425, x + 438, 477), 12, panel, line)
+        d.text((x + 150, 445), "Message ChatGPT...", font=font(8), fill=muted)
+        rr(d, (x + 402, 435, x + 428, 467), 8, accent)
+        d.text((x + 411, 442), "↑", font=font(12, True), fill=bg)
+
+    d.text((x + 14, 482), "● Active", font=font(7), fill=accent)
+    d.rectangle((x, bottom, x + pw, H), fill=panel)
+    platform = "CLAUDE" if claude else "CHATGPT"
+    box = d.textbbox((0, 0), platform, font=font(11, True))
+    d.text((x + (pw - (box[2] - box[0])) / 2, 518), platform, font=font(11, True), fill=accent)
 
 def frame(skin, position):
     collection, name, bg, panel, panel2, text, muted, accent, line = skin
@@ -86,14 +110,13 @@ def frame(skin, position):
         ImageDraw.Draw(glow).ellipse((570, -220, 1080, 270), fill=accent + "32")
         im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(75))).convert("RGB")
     d = ImageDraw.Draw(im)
-    d.rectangle((0, 0, W, 72), fill=panel)
-    d.text((20, 14), "AI SKINS", font=font(16, True), fill=accent)
-    d.text((20, 40), "CHATGPT + CODEX + CLAUDE", font=font(8, True), fill=muted)
-    d.text((315, 22), name, font=font(18, True), fill=text)
-    d.text((815, 25), f"{position:02d}/20", font=font(10, True), fill=accent)
-    app_panel(d, 12, "CHATGPT / CODEX", skin)
-    app_panel(d, 492, "CLAUDE", skin, claude=True)
-    d.rectangle((478, 72, 482, H), fill=accent)
+    d.rectangle((0, 0, W, 56), fill=panel)
+    title_box = d.textbbox((0, 0), name, font=font(18, True))
+    d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
+    d.text((890, 22), f"{position:02d}/20", font=font(8, True), fill=muted)
+    app_panel(d, 12, skin)
+    app_panel(d, 492, skin, claude=True)
+    d.rectangle((478, 56, 482, H), fill=accent)
     return im
 
 by_name = {skin[1]: skin for skin in SKINS}

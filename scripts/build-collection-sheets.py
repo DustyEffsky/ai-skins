@@ -31,6 +31,19 @@ SIGNATURE = [
     ("CELESTIAL", "#070713", "#101024", "#1a1936", "#f2f2ff", "#9b9ab8", "#7c9dff", "#3f3d68"),
 ]
 
+MODERN = [
+    ("JAPANESE HI-FI", "hifi", "#171d1c", "#d7cfbf", "#222824", "#f2ecdc", "#72e2cb", "#ffb65c"),
+    ("CONTROL ROOM", "control", "#071012", "#0c191b", "#102023", "#c9d7d6", "#63e6c2", "#ff5c4a"),
+    ("AFTERHOURS", "afterhours", "#090811", "#12101b", "#1b1728", "#f7f4ff", "#b06cff", "#c5ff4a"),
+    ("BENTO POP", "bento", "#f5f0ff", "#ffffff", "#ebe3ff", "#17131f", "#6b39ff", "#c8ff62"),
+    ("SOFT TERMINAL", "terminal", "#dff7ee", "#f7fffb", "#173f35", "#14211d", "#116149", "#8c5bff"),
+    ("CHROME CANDY", "candy", "#d8d0ff", "#ffffff", "#f8e9ff", "#17131e", "#742cff", "#ff71c4"),
+    ("FIELD NOTES", "notes", "#f2eddf", "#fffdf5", "#eee7d6", "#272b2d", "#285b68", "#e6c94a"),
+    ("STREET TYPE", "street", "#e9ff42", "#f7f4ff", "#151515", "#151515", "#6a34ff", "#151515"),
+    ("RAINROOM", "rain", "#0d1419", "#18242c", "#2d414c", "#dce6e9", "#a9cbd5", "#7ca7b6"),
+    ("PROTOTYPE ZERO", "prototype", "#e9e9e4", "#f7f7f3", "#deded8", "#191919", "#1670ff", "#191919"),
+]
+
 def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
     return ImageFont.truetype(f"/usr/share/fonts/truetype/dejavu/{name}", size)
@@ -91,6 +104,104 @@ def tile(skin, signature=False, platform="chatgpt"):
     d.text((186, 233), f"--accent: {accent};", font=font(8), fill=accent)
     return im
 
+def modern_tile(skin, platform="chatgpt"):
+    name, layout, bg, panel, panel2, text, accent, accent2 = skin
+    im = Image.new("RGB", (620, 286), bg)
+    d = ImageDraw.Draw(im)
+    claude = platform == "claude"
+    rail = 112 if claude else 138
+    title = "What are we making?" if claude else "Design session"
+
+    if layout == "candy":
+        glow = Image.new("RGBA", im.size, (0,0,0,0))
+        gd = ImageDraw.Draw(glow)
+        gd.ellipse((-90,-110,260,220), fill=accent2+"88")
+        gd.ellipse((420,100,760,420), fill="#77e6ff88")
+        im = Image.alpha_composite(im.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(42))).convert("RGB")
+        d = ImageDraw.Draw(im)
+    if layout in ("control", "prototype", "notes"):
+        grid = accent + ("24" if layout != "prototype" else "20")
+        overlay = Image.new("RGBA", im.size, (0,0,0,0)); od = ImageDraw.Draw(overlay)
+        for x in range(0,620,22): od.line((x,0,x,286), fill=grid)
+        for y in range(0,286,22): od.line((0,y,620,y), fill=grid)
+        im = Image.alpha_composite(im.convert("RGBA"), overlay).convert("RGB"); d=ImageDraw.Draw(im)
+
+    if layout == "hifi":
+        d.rectangle((0,0,620,42),fill="#d7cfbf"); d.text((16,14),"AI-7700 / INTEGRATED WORKSTATION",font=font(10,True),fill="#171a18")
+        d.rectangle((14,54,606,224),fill=panel,outline="#706a5e",width=2); d.rectangle((14,54,rail,224),fill="#222824")
+        d.text((28,72),"SOURCE",font=font(9,True),fill=accent)
+        for i,s in enumerate(("01 NEW","02 CHATS","03 PROJECTS")): d.text((28,102+i*27),s,font=font(8),fill=text)
+        d.text((rail+24,74),title,font=font(15,True),fill=text)
+        d.rectangle((rail+24,111,586,161),fill="#2c3532",outline="#59615a"); d.text((rail+39,129),"Precision without visual noise.",font=font(9),fill=text)
+        d.rectangle((rail+24,178,586,211),fill="#111615",outline="#59615a"); d.text((rail+37,189),"ASK CLAUDE..." if claude else "INPUT SIGNAL...",font=font(8),fill=accent)
+        d.rectangle((14,235,606,278),fill="#c9c0ad"); d.rectangle((29,244,158,270),fill="#151a18"); d.text((38,250),"INPUT  ▮▮▮▮▯",font=font(8),fill=accent); d.text((366,249),"DECORATIVE / NO TELEMETRY",font=font(7),fill="#635e54")
+    elif layout == "control":
+        d.rectangle((0,0,620,38),fill=panel2); d.text((14,13),"OPS GRID // SYSTEM NOMINAL",font=font(9,True),fill=accent); d.text((538,13),platform.upper(),font=font(8,True),fill=accent2)
+        d.rectangle((0,38,rail,286),fill=panel); d.rectangle((514,38,620,286),fill=panel)
+        for i,s in enumerate(("SESSION","PROJECTS","LOGS")): d.text((16,68+i*34),f"0{i+1} {s}",font=font(8),fill=text)
+        d.text((rail+20,62),"ACTIVE CHANNEL",font=font(9,True),fill=accent2)
+        for y,label in ((100,"REQUEST 014"),(162,"RESPONSE")):
+            d.rectangle((rail+20,y,494,y+48),fill=panel,outline=accent); d.text((rail+32,y+9),label,font=font(8,True),fill=accent); d.text((rail+32,y+26),"Hierarchy stable. System clear.",font=font(8),fill=text)
+        d.ellipse((532,64,600,132),outline=accent,width=2); d.text((529,151),"LINK 98%",font=font(8),fill=accent2); d.text((528,252),"FAKE STATUS",font=font(7),fill=text)
+    elif layout == "afterhours":
+        d.rectangle((0,0,rail,286),fill=panel); d.text((18,20),"AFTER HOURS",font=font(13,True),fill=accent2)
+        for i,s in enumerate(("CHATS","MIXES","PROJECTS")): d.rounded_rectangle((14,58+i*39,rail-12,87+i*39),radius=14,fill=panel2); d.text((30,68+i*39),s,font=font(8),fill=text)
+        d.text((rail+25,28),title,font=font(16,True),fill=text)
+        d.rounded_rectangle((rail+25,68,590,126),radius=14,fill=panel2); d.rectangle((rail+25,68,rail+29,126),fill=accent); d.text((rail+42,86),"Give the interface more pulse.",font=font(9),fill=text)
+        d.rounded_rectangle((rail+25,143,590,198),radius=14,fill=panel2); d.text((rail+42,162),"Sharper rhythm. Less chrome.",font=font(9),fill=text)
+        d.rounded_rectangle((rail+25,222,590,260),radius=16,fill="#f5f1ff"); d.text((rail+42,235),"Drop a thought...",font=font(8),fill="#16121f")
+        d.rectangle((rail+25,272,590,278),fill="#282235"); d.rectangle((rail+25,272,rail+190,278),fill=accent2)
+    elif layout == "bento":
+        d.rounded_rectangle((12,12,rail-12,274),radius=22,fill=accent); d.text((30,31),"+",font=font(19,True),fill="#ffffff")
+        for i,s in enumerate(("CHATS","PROJECTS","SAVED")): d.text((28,85+i*39),s,font=font(8,True),fill="#ffffff")
+        d.text((rail+22,24),title,font=font(16,True),fill=text); d.text((548,24),platform.upper(),font=font(8,True),fill=accent)
+        d.rounded_rectangle((rail+22,62,368,157),radius=20,fill=accent2); d.text((rail+38,81),"YOU",font=font(8,True),fill=text); d.text((rail+38,105),"Make it modular",font=font(10,True),fill=text)
+        d.rounded_rectangle((382,62,600,157),radius=20,fill=panel); d.text((398,82),platform.upper(),font=font(8,True),fill=accent); d.text((398,108),"Clear. Bright. Useful.",font=font(9),fill=text)
+        d.rounded_rectangle((rail+22,174,600,258),radius=20,fill=panel); d.text((rail+40,194),"Message anything...",font=font(9),fill="#716a7e")
+    elif layout == "terminal":
+        d.rounded_rectangle((12,12,rail-12,274),radius=20,fill=panel2); d.text((28,28),"~/ai",font=font(14,True),fill="#dff7ee")
+        for i,s in enumerate(("NEW","CHATS","PROJECTS","TOOLS")): d.text((28,76+i*34),s,font=font(8),fill="#dff7ee")
+        d.rounded_rectangle((rail,12,606,274),radius=20,fill=panel); d.text((rail+24,33),"claude@workspace:~$" if claude else "chatgpt@workspace:~$",font=font(10,True),fill=accent)
+        d.rounded_rectangle((rail+24,73,580,119),radius=13,fill="#e7f1ed"); d.text((rail+39,89),"$ refine the interface",font=font(9),fill=text)
+        d.rounded_rectangle((rail+24,137,580,190),radius=13,fill="#d8c7ff"); d.text((rail+39,154),"Done. Soft structure, crisp type.",font=font(9),fill=text)
+        d.rounded_rectangle((rail+24,216,580,252),radius=12,fill="#ffffff",outline="#9dc6b8"); d.text((rail+39,228),"type a message...",font=font(8),fill=text)
+    elif layout == "candy":
+        d.rounded_rectangle((14,14,rail-15,272),radius=26,fill="#ffffff99",outline="#ffffff"); d.text((44,24),"✦",font=font(19,True),fill=accent)
+        for i,s in enumerate(("NEW","CHATS","PROJECTS","SAVED")): d.text((30,76+i*33),s,font=font(8,True),fill=text)
+        d.text((rail+22,26),title,font=font(16,True),fill=text); d.text((542,26),platform.upper(),font=font(8,True),fill=accent)
+        for y,label,fill in ((66,"YOU","#ffffffcc"),(137,platform.upper(),"#f8e9ffcc")):
+            d.rounded_rectangle((rail+22,y,594,y+56),radius=22,fill=fill,outline="#ffffff"); d.text((rail+39,y+11),label,font=font(8,True),fill=accent); d.text((rail+39,y+29),"Glossy, clean and usable.",font=font(9),fill=text)
+        d.rounded_rectangle((rail+22,225,594,264),radius=19,fill="#ffffffcc",outline="#ffffff"); d.text((rail+39,238),"Say something...",font=font(8),fill="#655873")
+    elif layout == "notes":
+        d.line((76,0,76,286),fill="#d76a5c",width=2); d.text((rail+22,30),title,font=font(17,True),fill=accent)
+        for i,s in enumerate(("NEW CHAT","CHATS","PROJECTS")): d.rectangle((9,44+i*49,66,79+i*49),fill=(accent2 if i!=1 else "#ef9f91")); d.text((15,57+i*49),s,font=font(7,True),fill=text)
+        for y,label in ((81,"Question"),(153,"Observation")):
+            d.rectangle((rail+22,y,590,y+55),fill=panel,outline="#c3bca9"); d.text((rail+37,y+10),label,font=font(9,True),fill=accent); d.text((rail+37,y+29),"How should this workspace feel?",font=font(8),fill=text)
+        d.rectangle((rail+22,231,590,266),fill=panel,outline="#aea690"); d.text((rail+37,243),"Write a note...",font=font(8),fill=text)
+    elif layout == "street":
+        d.rectangle((0,0,rail,286),fill=bg); d.text((14,18),"MAKE\nIT\nHIT",font=font(18,True),fill=text)
+        for i,s in enumerate(("NEW CHAT","RECENTS","PROJECTS")): d.text((14,119+i*31),s,font=font(8,True),fill=text)
+        d.text((rail+20,22),"IDEAS WITH VOLUME.",font=font(17,True),fill=text); d.text((547,25),platform.upper(),font=font(7,True),fill=accent)
+        for y,label in ((68,"YOU"),(145,platform.upper())):
+            d.rectangle((rail+20,y,584,y+58),fill=panel,outline=text,width=2); d.rectangle((rail+25,y+5,589,y+63),outline=text,width=2); d.text((rail+38,y+12),label,font=font(8,True),fill=accent); d.text((rail+38,y+32),"Big voice. Clear flow.",font=font(9),fill=text)
+        d.rectangle((rail+20,233,590,270),fill=text); d.text((rail+38,246),"START SOMETHING...",font=font(8,True),fill=bg)
+    elif layout == "rain":
+        glow=Image.new("RGBA",im.size,(0,0,0,0)); gd=ImageDraw.Draw(glow); gd.ellipse((360,-160,760,230),fill=accent+"44"); im=Image.alpha_composite(im.convert("RGBA"),glow.filter(ImageFilter.GaussianBlur(55))).convert("RGB"); d=ImageDraw.Draw(im)
+        d.rectangle((0,0,rail,286),fill=panel); d.text((18,20),platform.upper(),font=font(9,True),fill=accent)
+        for i,s in enumerate(("New conversation","Projects","Library")): d.text((18,66+i*32),s,font=font(8),fill=text)
+        d.text((rail+28,57),title,font=font(16,True),fill=text)
+        d.rounded_rectangle((rail+28,100,584,174),radius=19,fill=panel2,outline=accent2); d.text((rail+49,126),"A quiet place to think.",font=font(10),fill=text)
+        d.rounded_rectangle((rail+28,222,584,264),radius=19,fill=panel2,outline=accent2); d.text((rail+49,236),"Ask anything...",font=font(8),fill=accent)
+    else:
+        d.rectangle((0,0,620,27),fill=text); d.text((10,9),"BUILD 0.0.7 / COMPONENT MAP",font=font(7,True),fill="#ffffff")
+        d.rectangle((16,45,rail-14,266),outline=accent); d.text((27,58),"NAV",font=font(8,True),fill=accent)
+        for i,s in enumerate(("NEW_CHAT","PROJECTS","SETTINGS")): d.text((27,96+i*36),s,font=font(7),fill=text)
+        d.text((rail+22,48),platform.upper()+"_SURFACE",font=font(12,True),fill=text)
+        for y,copy in ((83,"Build a skin that exposes its system."),(153,"TOKENS_APPLIED = TRUE")):
+            d.rectangle((rail+22,y,588,y+50),outline="#777777"); d.text((rail+37,y+18),copy,font=font(8),fill=text)
+        d.rectangle((rail+22,229,588,267),outline=text,width=2); d.text((rail+37,242),"INPUT_COMPONENT / READY",font=font(8),fill=text)
+    return im
+
 def sheet(title, skins, filename, signature=False, platform="chatgpt"):
     canvas = Image.new("RGB", (W, H), "#0b0c0e")
     d = ImageDraw.Draw(canvas)
@@ -98,11 +209,14 @@ def sheet(title, skins, filename, signature=False, platform="chatgpt"):
     for index, skin in enumerate(skins):
         x = 70 + (index % 2) * 660
         y = 160 + (index // 2) * 318
-        canvas.paste(tile(skin, signature, platform), (x, y))
+        preview = modern_tile(skin, platform) if title.startswith("MODERN") or "/ MODERN" in title else tile(skin, signature, platform)
+        canvas.paste(preview, (x, y))
     canvas.save(OUT / filename, optimize=True)
 
 sheet("STANDARD COLLECTION", STANDARD, "standard-collection.png")
 sheet("SIGNATURE COLLECTION", SIGNATURE, "signature-collection.png", signature=True)
 sheet("CLAUDE / STANDARD COLLECTION", STANDARD, "claude-standard-collection.png", platform="claude")
 sheet("CLAUDE / SIGNATURE COLLECTION", SIGNATURE, "claude-signature-collection.png", signature=True, platform="claude")
+sheet("MODERN COLLECTION", MODERN, "modern-collection.png")
+sheet("CLAUDE / MODERN COLLECTION", MODERN, "claude-modern-collection.png", platform="claude")
 print("collection sheets built")

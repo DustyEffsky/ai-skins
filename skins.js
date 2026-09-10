@@ -118,6 +118,46 @@ const CODEX_SKINS = [
   {
     id:"celestial", collection:"signature", name:"Celestial", note:"Cosmic restraint", swatches:["#080817","#7c9dff","#e78bff"], dark:true,
     vars:{bg:"#070713",panel:"rgba(16,16,36,.92)",panel2:"#1a1936",text:"#f2f2ff",muted:"#9b9ab8",accent:"#7c9dff",accent2:"#e78bff",line:"#3f3d68",glow:"rgba(124,157,255,.23)",radius:"17px",font:"Inter, system-ui",fx:"radial-gradient(circle at 72% 10%,rgba(231,139,255,.16),transparent 31%),radial-gradient(circle at 20% 85%,rgba(124,157,255,.13),transparent 35%)"}
+  },
+  {
+    id:"hifi", collection:"modern", name:"Japanese Hi-Fi", note:"Precision audio workstation", swatches:["#171d1c","#d7cfbf","#72e2cb"], dark:true,
+    vars:{bg:"#171d1c",panel:"#222824",panel2:"#2c3532",text:"#f2ecdc",muted:"#98a29b",accent:"#72e2cb",accent2:"#ffb65c",line:"#59615a",glow:"rgba(114,226,203,.18)",radius:"2px",font:"'Arial Narrow', 'Aptos Narrow', sans-serif",fx:"repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)"}
+  },
+  {
+    id:"control", collection:"modern", name:"Control Room", note:"Dense operational clarity", swatches:["#071012","#63e6c2","#ff5c4a"], dark:true,
+    vars:{bg:"#071012",panel:"#0c191b",panel2:"#102023",text:"#c9d7d6",muted:"#718a8b",accent:"#63e6c2",accent2:"#ff5c4a",line:"#385054",glow:"rgba(99,230,194,.2)",radius:"0px",font:"'Bahnschrift Condensed', 'Arial Narrow', sans-serif",fx:"linear-gradient(rgba(21,48,51,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(21,48,51,.22) 1px,transparent 1px)"}
+  },
+  {
+    id:"afterhours", collection:"modern", name:"Afterhours", note:"Night-mode creative pulse", swatches:["#090811","#b06cff","#c5ff4a"], dark:true,
+    vars:{bg:"#090811",panel:"#12101b",panel2:"#1b1728",text:"#f7f4ff",muted:"#8e849f",accent:"#b06cff",accent2:"#c5ff4a",line:"#352c49",glow:"rgba(176,108,255,.25)",radius:"16px",font:"'Arial Rounded MT Bold', 'Trebuchet MS', sans-serif",fx:"radial-gradient(circle at 80% 0,rgba(113,60,255,.22),transparent 38%)"}
+  },
+  {
+    id:"bentopop", collection:"modern", name:"Bento Pop", note:"Bright modular workspace", swatches:["#f5f0ff","#6b39ff","#c8ff62"], dark:false,
+    vars:{bg:"#f5f0ff",panel:"#ffffff",panel2:"#ebe3ff",text:"#17131f",muted:"#716a7e",accent:"#6b39ff",accent2:"#79aa19",line:"#d7cbed",glow:"rgba(107,57,255,.16)",radius:"22px",font:"'Aptos Display', 'Segoe UI', sans-serif",fx:"radial-gradient(circle at 90% 8%,rgba(200,255,98,.32),transparent 30%)"}
+  },
+  {
+    id:"softterminal", collection:"modern", name:"Soft Terminal", note:"Calm code-native workspace", swatches:["#dff7ee","#173f35","#8c5bff"], dark:false,
+    vars:{bg:"#dff7ee",panel:"#f7fffb",panel2:"#e7f1ed",text:"#14211d",muted:"#557168",accent:"#116149",accent2:"#8c5bff",line:"#9dc6b8",glow:"rgba(140,91,255,.15)",radius:"14px",font:"'Cascadia Code', Consolas, monospace",fx:"linear-gradient(135deg,rgba(140,91,255,.08),transparent 46%)"}
+  },
+  {
+    id:"chromecandy", collection:"modern", name:"Chrome Candy", note:"Glossy translucent layers", swatches:["#d8d0ff","#ff71c4","#77e6ff"], dark:false,
+    vars:{bg:"#d8d0ff",panel:"rgba(255,255,255,.72)",panel2:"rgba(255,255,255,.46)",text:"#17131e",muted:"#655873",accent:"#742cff",accent2:"#d52d91",line:"rgba(255,255,255,.88)",glow:"rgba(116,44,255,.2)",radius:"24px",font:"'Century Gothic', 'Aptos', sans-serif",fx:"radial-gradient(circle at 10% 10%,rgba(255,113,196,.64),transparent 28%),radial-gradient(circle at 90% 80%,rgba(119,230,255,.68),transparent 34%)"}
+  },
+  {
+    id:"fieldnotes", collection:"modern", name:"Field Notes", note:"Graph paper and sticky tabs", swatches:["#f2eddf","#285b68","#e6c94a"], dark:false,
+    vars:{bg:"#f2eddf",panel:"#fffdf5",panel2:"#eee7d6",text:"#272b2d",muted:"#6e746f",accent:"#285b68",accent2:"#d55246",line:"#aea690",glow:"rgba(40,91,104,.13)",radius:"5px",font:"'Segoe Print', 'Comic Sans MS', cursive",fx:"linear-gradient(rgba(76,126,143,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(76,126,143,.12) 1px,transparent 1px)"}
+  },
+  {
+    id:"streettype", collection:"modern", name:"Street Type", note:"Big type, compact controls", swatches:["#e9ff42","#151515","#6a34ff"], dark:false,
+    vars:{bg:"#e9ff42",panel:"#f7f4ff",panel2:"#151515",text:"#151515",muted:"#5a5a45",accent:"#6a34ff",accent2:"#151515",line:"#151515",glow:"transparent",radius:"0px",font:"Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",fx:"linear-gradient(115deg,transparent 70%,rgba(106,52,255,.12) 70%)"}
+  },
+  {
+    id:"rainroom", collection:"modern", name:"Rainroom", note:"Quiet glass in storm light", swatches:["#0d1419","#293b45","#a9cbd5"], dark:true,
+    vars:{bg:"#0d1419",panel:"rgba(24,36,44,.82)",panel2:"rgba(45,65,76,.72)",text:"#dce6e9",muted:"#9eb1b8",accent:"#a9cbd5",accent2:"#7ca7b6",line:"rgba(123,158,170,.38)",glow:"rgba(169,203,213,.15)",radius:"20px",font:"'Segoe UI Variable', 'Segoe UI', sans-serif",fx:"radial-gradient(circle at 75% 10%,rgba(97,121,139,.33),transparent 36%),repeating-linear-gradient(105deg,transparent 0 37px,rgba(185,211,220,.035) 38px,rgba(185,211,220,.06) 40px,transparent 42px)"}
+  },
+  {
+    id:"prototype", collection:"modern", name:"Prototype Zero", note:"Exposed interface system", swatches:["#e9e9e4","#1670ff","#191919"], dark:false,
+    vars:{bg:"#e9e9e4",panel:"#f7f7f3",panel2:"#deded8",text:"#191919",muted:"#66665f",accent:"#1670ff",accent2:"#191919",line:"#777770",glow:"transparent",radius:"0px",font:"'Cascadia Mono', 'Courier New', monospace",fx:"linear-gradient(rgba(22,112,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(22,112,255,.1) 1px,transparent 1px)"}
   }
 ];
 

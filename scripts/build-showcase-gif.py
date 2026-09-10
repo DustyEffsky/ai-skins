@@ -1,8 +1,9 @@
 from pathlib import Path
+import runpy
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "screenshots" / "all-20-skins-slow.gif"
+OUTPUT = ROOT / "screenshots" / "all-30-skins-slow.gif"
 W, H = 960, 540
 OUTPUT_SIZE = (1440, 810)
 
@@ -30,12 +31,18 @@ SKINS = [
 ]
 
 SEQUENCE = [
-    "MIDNIGHT OLED", "CHATGPT CLASSIC", "MONOLITH", "OBSIDIAN GLASS",
-    "WINAMP INDUSTRIAL", "TOXIC EXECUTIVE", "GAME DEV DESK", "BLUEPRINT",
-    "ABYSSAL", "CELESTIAL", "NEON GRID", "SAKURA AFTER DARK",
-    "EMBER FORGE", "BAVARIAN WORKSHOP", "AMBER TERMINAL", "PAPER & INK",
-    "IVORY ATELIER", "STUDIO LIGHT", "HOLOGRAPHIC", "LIQUID CHROME",
+    "MIDNIGHT OLED", "CHATGPT CLASSIC", "MONOLITH", "OBSIDIAN GLASS", "PROTOTYPE ZERO",
+    "WINAMP INDUSTRIAL", "TOXIC EXECUTIVE", "SOFT TERMINAL", "GAME DEV DESK", "CONTROL ROOM",
+    "BLUEPRINT", "ABYSSAL", "RAINROOM", "CELESTIAL", "NEON GRID", "SAKURA AFTER DARK",
+    "AFTERHOURS", "EMBER FORGE", "BAVARIAN WORKSHOP", "AMBER TERMINAL", "JAPANESE HI-FI",
+    "PAPER & INK", "IVORY ATELIER", "STUDIO LIGHT", "BENTO POP", "STREET TYPE",
+    "HOLOGRAPHIC", "LIQUID CHROME", "CHROME CANDY", "FIELD NOTES",
 ]
+
+sheet_tools = runpy.run_path(str(ROOT / "scripts" / "build-collection-sheets.py"))
+MODERN = sheet_tools["MODERN"]
+modern_tile = sheet_tools["modern_tile"]
+modern_by_name = {skin[0]: skin for skin in MODERN}
 
 def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
@@ -109,14 +116,34 @@ def frame(skin, position):
     d.rectangle((0, 0, W, 56), fill=panel)
     title_box = d.textbbox((0, 0), name, font=font(18, True))
     d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
-    d.text((890, 22), f"{position:02d}/20", font=font(8, True), fill=muted)
+    d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=muted)
     app_panel(d, 12, skin)
     app_panel(d, 492, skin, claude=True)
     d.rectangle((478, 56, 482, H), fill=accent)
     return im
 
+def modern_frame(skin, position):
+    name, _layout, bg, panel, _panel2, text, accent, _accent2 = skin
+    im = Image.new("RGB", (W, H), bg)
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, W, 56), fill=panel)
+    title_box = d.textbbox((0, 0), name, font=font(18, True))
+    d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
+    d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=accent)
+    left = modern_tile(skin, "chatgpt").resize((456, 350), Image.Resampling.LANCZOS)
+    right = modern_tile(skin, "claude").resize((456, 350), Image.Resampling.LANCZOS)
+    im.paste(left, (12, 78))
+    im.paste(right, (492, 78))
+    d.rectangle((12, 448, 468, 540), fill=panel)
+    d.rectangle((492, 448, 948, 540), fill=panel)
+    for x, label in ((12, "CHATGPT"), (492, "CLAUDE")):
+        box = d.textbbox((0, 0), label, font=font(11, True))
+        d.text((x + (456 - (box[2] - box[0])) / 2, 486), label, font=font(11, True), fill=accent)
+    d.rectangle((478, 56, 482, H), fill=accent)
+    return im
+
 by_name = {skin[1]: skin for skin in SKINS}
-keyframes = [frame(by_name[name], index + 1).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS) for index, name in enumerate(SEQUENCE)]
+keyframes = [(modern_frame(modern_by_name[name], index + 1) if name in modern_by_name else frame(by_name[name], index + 1)).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS) for index, name in enumerate(SEQUENCE)]
 palette_strip = Image.new("RGB", (240, 135 * len(keyframes)))
 for index, image in enumerate(keyframes):
     palette_strip.paste(image.resize((240, 135), Image.Resampling.BILINEAR), (0, index * 135))
@@ -125,12 +152,12 @@ frames, durations = [], []
 for index, current in enumerate(keyframes):
     following = keyframes[(index + 1) % len(keyframes)]
     frames.append(current.quantize(palette=shared_palette, dither=Image.Dither.NONE))
-    durations.append(1800)
-    for step in range(1, 9):
-        amount = step / 9
+    durations.append(2600)
+    for step in range(1, 13):
+        amount = step / 13
         eased = amount * amount * (3 - 2 * amount)
         frames.append(Image.blend(current, following, eased).quantize(palette=shared_palette, dither=Image.Dither.NONE))
-        durations.append(90)
+        durations.append(85)
 
 frames[0].save(OUTPUT, save_all=True, append_images=frames[1:], duration=durations, loop=0, optimize=True, disposal=1)
 print(OUTPUT)

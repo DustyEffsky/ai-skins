@@ -19,11 +19,16 @@ function render() {
 }
 
 function buildSkins() {
-  $("skins").innerHTML = CODEX_SKINS.map(skin => `
-    <button class="skin" data-skin="${skin.id}" title="${skin.name}">
-      <span class="swatches">${skin.swatches.map(color => `<i style="background:${color}"></i>`).join("")}</span>
-      <span><strong>${skin.name}</strong><small>${skin.note}</small></span>
-    </button>`).join("");
+  const labels = { standard: "Standard", signature: "Signature", modern: "Modern" };
+  $("skins").innerHTML = Object.keys(labels).map(collection => `
+    <section class="skin-collection">
+      <h2>${labels[collection]}</h2>
+      <div class="skin-grid">${CODEX_SKINS.filter(skin => (skin.collection || "standard") === collection).map(skin => `
+        <button class="skin" data-skin="${skin.id}" title="${skin.name}">
+          <span class="swatches">${skin.swatches.map(color => `<i style="background:${color}"></i>`).join("")}</span>
+          <span><strong>${skin.name}</strong><small>${skin.note}</small></span>
+        </button>`).join("")}</div>
+    </section>`).join("");
   document.querySelectorAll(".skin").forEach(el => el.addEventListener("click", () => save({skin: el.dataset.skin, enabled: true})));
 }
 

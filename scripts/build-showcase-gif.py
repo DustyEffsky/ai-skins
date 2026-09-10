@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "screenshots" / "all-30-skins-slow.gif"
+OUTPUT = ROOT / "screenshots" / "all-20-skins-slow.gif"
 W, H = 960, 540
 OUTPUT_SIZE = (1440, 810)
 
@@ -27,16 +27,6 @@ SKINS = [
     ("SIGNATURE 08", "HOLOGRAPHIC", "#f3f6fb", "#ffffff", "#e9eef7", "#1d2330", "#6e7688", "#6f4cff", "#c9d2e2"),
     ("SIGNATURE 09", "TOXIC EXECUTIVE", "#070907", "#10150d", "#1b2415", "#f2f8e9", "#8d9a81", "#c8ff00", "#34432c"),
     ("SIGNATURE 10", "CELESTIAL", "#070713", "#101024", "#1a1936", "#f2f2ff", "#9b9ab8", "#7c9dff", "#3f3d68"),
-    ("AUTEUR 01", "CONTROL ROOM", "#080b0d", "#101518", "#182024", "#d8e1e3", "#77868b", "#ff4d3d", "#344148"),
-    ("AUTEUR 02", "DIRECTOR'S CUT", "#090909", "#111111", "#202020", "#e9e4dc", "#817d77", "#d9382b", "#383532"),
-    ("AUTEUR 03", "THE ARCHIVE", "#e8e0cf", "#f4eddf", "#ddd2bd", "#2c2924", "#756d60", "#8b2e27", "#b9ad98"),
-    ("AUTEUR 04", "BRAUN WORKSHOP", "#d7d2c8", "#e8e4dc", "#c7c1b6", "#272725", "#6f6b64", "#e85d04", "#aaa49a"),
-    ("AUTEUR 05", "HOTEL NOIR", "#130d0d", "#211315", "#351b1f", "#eadfcf", "#9f8c7d", "#c5a15a", "#594039"),
-    ("AUTEUR 06", "FIELD NOTES", "#e8e3d4", "#f6f1e4", "#dfd8c6", "#262b2d", "#687075", "#d04c3f", "#b9b29f"),
-    ("AUTEUR 07", "JAPANESE HI-FI", "#181a19", "#252825", "#343833", "#eee8db", "#999384", "#63d7c5", "#686454"),
-    ("AUTEUR 08", "EDITORIAL RED", "#f2f0eb", "#ffffff", "#e8e5de", "#141414", "#686868", "#e1251b", "#bcb8b0"),
-    ("AUTEUR 09", "RAINROOM", "#10171d", "#19232b", "#2a3943", "#dbe4e7", "#8b9ba2", "#8eb8c7", "#435660"),
-    ("AUTEUR 10", "PROTOTYPE ZERO", "#e9e9e4", "#f7f7f3", "#deded8", "#1b1b1b", "#66665f", "#006cff", "#92928c"),
 ]
 
 SEQUENCE = [
@@ -44,10 +34,7 @@ SEQUENCE = [
     "WINAMP INDUSTRIAL", "TOXIC EXECUTIVE", "GAME DEV DESK", "BLUEPRINT",
     "ABYSSAL", "CELESTIAL", "NEON GRID", "SAKURA AFTER DARK",
     "EMBER FORGE", "BAVARIAN WORKSHOP", "AMBER TERMINAL", "PAPER & INK",
-    "IVORY ATELIER", "THE ARCHIVE", "FIELD NOTES", "BRAUN WORKSHOP",
-    "EDITORIAL RED", "PROTOTYPE ZERO", "STUDIO LIGHT", "HOLOGRAPHIC",
-    "LIQUID CHROME", "JAPANESE HI-FI", "RAINROOM", "HOTEL NOIR",
-    "DIRECTOR'S CUT", "CONTROL ROOM",
+    "IVORY ATELIER", "STUDIO LIGHT", "HOLOGRAPHIC", "LIQUID CHROME",
 ]
 
 def font(size, bold=False):
@@ -122,7 +109,7 @@ def frame(skin, position):
     d.rectangle((0, 0, W, 56), fill=panel)
     title_box = d.textbbox((0, 0), name, font=font(18, True))
     d.text(((W - (title_box[2] - title_box[0])) / 2, 16), name, font=font(18, True), fill=text)
-    d.text((890, 22), f"{position:02d}/30", font=font(8, True), fill=muted)
+    d.text((890, 22), f"{position:02d}/20", font=font(8, True), fill=muted)
     app_panel(d, 12, skin)
     app_panel(d, 492, skin, claude=True)
     d.rectangle((478, 56, 482, H), fill=accent)

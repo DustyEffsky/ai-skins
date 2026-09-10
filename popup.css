@@ -15,7 +15,6 @@ main { padding: 12px; }
 .health.ok i { background: #92ff36; box-shadow: 0 0 6px #92ff36; }
 .health.warn i { background: #ffb84a; }
 .skins { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.collection-title { grid-column: 1 / -1; margin: 8px 2px 0; color: #8b9097; font: 700 10px/1 monospace; letter-spacing: 1.5px; text-transform: uppercase; }
 .skin { display: flex; gap: 9px; align-items: center; text-align: left; padding: 10px; border: 1px solid #2a2d31; background: #15171a; color: #eee; border-radius: 7px; cursor: pointer; }
 .skin:hover { border-color: #5a6068; }
 .skin.active { border-color: #9aff43; box-shadow: 0 0 0 1px #9aff43 inset; }

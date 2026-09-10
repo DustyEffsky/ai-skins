@@ -31,19 +31,6 @@ SIGNATURE = [
     ("CELESTIAL", "#070713", "#101024", "#1a1936", "#f2f2ff", "#9b9ab8", "#7c9dff", "#3f3d68"),
 ]
 
-AUTEUR = [
-    ("CONTROL ROOM", "#080b0d", "#101518", "#182024", "#d8e1e3", "#77868b", "#ff4d3d", "#344148"),
-    ("DIRECTOR'S CUT", "#090909", "#111111", "#202020", "#e9e4dc", "#817d77", "#d9382b", "#383532"),
-    ("THE ARCHIVE", "#e8e0cf", "#f4eddf", "#ddd2bd", "#2c2924", "#756d60", "#8b2e27", "#b9ad98"),
-    ("BRAUN WORKSHOP", "#d7d2c8", "#e8e4dc", "#c7c1b6", "#272725", "#6f6b64", "#e85d04", "#aaa49a"),
-    ("HOTEL NOIR", "#130d0d", "#211315", "#351b1f", "#eadfcf", "#9f8c7d", "#c5a15a", "#594039"),
-    ("FIELD NOTES", "#e8e3d4", "#f6f1e4", "#dfd8c6", "#262b2d", "#687075", "#d04c3f", "#b9b29f"),
-    ("JAPANESE HI-FI", "#181a19", "#252825", "#343833", "#eee8db", "#999384", "#63d7c5", "#686454"),
-    ("EDITORIAL RED", "#f2f0eb", "#ffffff", "#e8e5de", "#141414", "#686868", "#e1251b", "#bcb8b0"),
-    ("RAINROOM", "#10171d", "#19232b", "#2a3943", "#dbe4e7", "#8b9ba2", "#8eb8c7", "#435660"),
-    ("PROTOTYPE ZERO", "#e9e9e4", "#f7f7f3", "#deded8", "#1b1b1b", "#66665f", "#006cff", "#92928c"),
-]
-
 def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
     return ImageFont.truetype(f"/usr/share/fonts/truetype/dejavu/{name}", size)
@@ -118,6 +105,4 @@ sheet("STANDARD COLLECTION", STANDARD, "standard-collection.png")
 sheet("SIGNATURE COLLECTION", SIGNATURE, "signature-collection.png", signature=True)
 sheet("CLAUDE / STANDARD COLLECTION", STANDARD, "claude-standard-collection.png", platform="claude")
 sheet("CLAUDE / SIGNATURE COLLECTION", SIGNATURE, "claude-signature-collection.png", signature=True, platform="claude")
-sheet("AUTEUR COLLECTION", AUTEUR, "auteur-collection.png", signature=True)
-sheet("CLAUDE / AUTEUR COLLECTION", AUTEUR, "claude-auteur-collection.png", signature=True, platform="claude")
 print("collection sheets built")

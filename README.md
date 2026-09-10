@@ -1,10 +1,10 @@
 # AI Skins
 
-A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 30 complete visual identities, from restrained productivity themes to cinematic, industrial, archival and editorial treatments, without changing how the underlying apps work.
+A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 20 complete visual identities, from restrained productivity themes to glass, chrome, neon and editorial treatments, without changing how the underlying apps work.
 
 > Unofficial community project. Not affiliated with or endorsed by OpenAI or Anthropic. ChatGPT, Codex, and Claude are trademarks of their respective owners.
 
-![Slow split-screen preview cycling through all 30 AI Skins on ChatGPT, Codex, and Claude](screenshots/all-30-skins-slow.gif)
+![Slow split-screen preview cycling through all 20 AI Skins on ChatGPT, Codex, and Claude](screenshots/all-20-skins-slow.gif)
 
 ![All ten Standard skins arranged two abreast](screenshots/standard-collection.png)
 
@@ -14,14 +14,10 @@ A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 30 
 
 ![All ten Signature skins shown on Claude](screenshots/claude-signature-collection.png)
 
-![All ten Auteur skins arranged two abreast](screenshots/auteur-collection.png)
-
-![All ten Auteur skins shown on Claude](screenshots/claude-auteur-collection.png)
-
 ## What it does
 
 - Applies complete palettes, typography, surfaces, borders, glow and optional texture effects.
-- Includes **10 Standard skins**, **10 Signature skins**, and **10 Auteur skins**.
+- Includes **10 Standard skins** and **10 Signature skins**.
 - Adds Compact, Comfortable and Airy interface-density options.
 - Adjusts the maximum workspace width for focused or ultrawide layouts.
 - Stores every preference locally and makes no network requests.
@@ -61,19 +57,6 @@ A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 30 
 8. Holographic
 9. Toxic Executive
 10. Celestial
-
-## Included skins: Auteur
-
-1. Control Room
-2. Director's Cut
-3. The Archive
-4. Braun Workshop
-5. Hotel Noir
-6. Field Notes
-7. Japanese Hi-Fi
-8. Editorial Red
-9. Rainroom
-10. Prototype Zero
 
 Each skin can be combined with Compact, Comfortable, or Airy density, a custom workspace width, and adjustable texture intensity.
 

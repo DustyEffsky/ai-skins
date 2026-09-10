@@ -213,10 +213,10 @@ def sheet(title, skins, filename, signature=False, platform="chatgpt"):
         canvas.paste(preview, (x, y))
     canvas.save(OUT / filename, optimize=True)
 
-sheet("STANDARD COLLECTION", STANDARD, "standard-collection.png")
-sheet("SIGNATURE COLLECTION", SIGNATURE, "signature-collection.png", signature=True)
+sheet("CHATGPT / STANDARD COLLECTION", STANDARD, "standard-collection.png")
+sheet("CHATGPT / SIGNATURE COLLECTION", SIGNATURE, "signature-collection.png", signature=True)
 sheet("CLAUDE / STANDARD COLLECTION", STANDARD, "claude-standard-collection.png", platform="claude")
 sheet("CLAUDE / SIGNATURE COLLECTION", SIGNATURE, "claude-signature-collection.png", signature=True, platform="claude")
-sheet("MODERN COLLECTION", MODERN, "modern-collection.png")
+sheet("CHATGPT / MODERN COLLECTION", MODERN, "modern-collection.png")
 sheet("CLAUDE / MODERN COLLECTION", MODERN, "claude-modern-collection.png", platform="claude")
 print("collection sheets built")

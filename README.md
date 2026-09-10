@@ -22,14 +22,14 @@ A Winamp-inspired skin system for ChatGPT, Codex, and Claude. Switch between 20 
 - Adjusts the maximum workspace width for focused or ultrawide layouts.
 - Stores every preference locally and makes no network requests.
 - Provides a master switch that immediately restores the original interface.
-- Uses conservative semantic styling so individual enhancements fail safely when ChatGPT changes.
+- Uses conservative semantic styling so individual enhancements fail safely when a supported interface changes.
 
 ## Install locally
 
 1. Unzip the package.
 2. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
 3. Enable **Developer mode**.
-4. Choose **Load unpacked** and select the `codex-skins` folder.
+4. Choose **Load unpacked** and select the `ai-skins` folder.
 5. Open or refresh `https://chatgpt.com` or `https://claude.ai`, then click the extension icon.
 
 ## Included skins: Standard

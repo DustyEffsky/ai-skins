@@ -4,11 +4,11 @@ A Winamp-inspired skin system for ChatGPT Codex. Switch between 20 complete visu
 
 > Unofficial community project. Not affiliated with or endorsed by OpenAI. ChatGPT and Codex are trademarks of their respective owner.
 
+![Animated preview cycling through all 20 Codex Skins](screenshots/all-skins.gif)
+
 ![Standard collection: Winamp Industrial, Paper and Ink, Blueprint, and Bavarian Workshop](screenshots/standard-collection.svg)
 
 ![Signature collection: Obsidian Glass, Sakura After Dark, Ivory Atelier, and Holographic](screenshots/signature-collection.svg)
-
-![Animated preview cycling through all 20 Codex Skins](screenshots/all-skins.gif)
 
 ## What it does
 

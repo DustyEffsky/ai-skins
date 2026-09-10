@@ -34,19 +34,19 @@ jobs:
           from PIL import Image
           from pathlib import Path
 
-          path = Path("screenshots/all-20-skins-slow.gif")
+          path = Path("screenshots/all-30-skins-slow.gif")
           image = Image.open(path)
-          assert image.n_frames == 180, image.n_frames
+          assert image.n_frames == 270, image.n_frames
           assert image.size == (1440, 810), image.size
-          assert path.stat().st_size > 4_000_000, path.stat().st_size
-          print(f"Verified {image.n_frames} frames at {image.size}, {path.stat().st_size} bytes")
+          assert path.stat().st_size > 7_000_000, path.stat().st_size
+          print(path, image.n_frames, image.size, path.stat().st_size)
           PY
 
       - name: Commit rebuilt GIF
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshots/all-20-skins-slow.gif
+          git add screenshots/all-30-skins-slow.gif
           git diff --cached --quiet && exit 0
-          git commit -m "Rebuild complete 20-skin showcase GIF"
+          git commit -m "Rebuild complete 30-skin showcase GIF"
           git push

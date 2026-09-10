@@ -118,6 +118,46 @@ const CODEX_SKINS = [
   {
     id:"celestial", collection:"signature", name:"Celestial", note:"Cosmic restraint", swatches:["#080817","#7c9dff","#e78bff"], dark:true,
     vars:{bg:"#070713",panel:"rgba(16,16,36,.92)",panel2:"#1a1936",text:"#f2f2ff",muted:"#9b9ab8",accent:"#7c9dff",accent2:"#e78bff",line:"#3f3d68",glow:"rgba(124,157,255,.23)",radius:"17px",font:"Inter, system-ui",fx:"radial-gradient(circle at 72% 10%,rgba(231,139,255,.16),transparent 31%),radial-gradient(circle at 20% 85%,rgba(124,157,255,.13),transparent 35%)"}
+  },
+  {
+    id:"control-room", collection:"auteur", name:"Control Room", note:"Mission-critical density", swatches:["#080b0d","#b8c5c9","#ff4d3d"], dark:true,
+    vars:{bg:"#080b0d",panel:"#101518",panel2:"#182024",text:"#d8e1e3",muted:"#77868b",accent:"#ff4d3d",accent2:"#62d6a6",line:"#344148",glow:"rgba(255,77,61,.18)",radius:"2px",font:"Arial Narrow, Roboto Condensed, sans-serif",fx:"repeating-linear-gradient(90deg,transparent 0 79px,rgba(184,197,201,.025) 80px)"}
+  },
+  {
+    id:"directors-cut", collection:"auteur", name:"Director's Cut", note:"A cinematic editing suite", swatches:["#090909","#242424","#d9382b"], dark:true,
+    vars:{bg:"#090909",panel:"#111111",panel2:"#202020",text:"#e9e4dc",muted:"#817d77",accent:"#d9382b",accent2:"#d6b06a",line:"#383532",glow:"rgba(217,56,43,.16)",radius:"1px",font:"Helvetica Neue, Arial, sans-serif",fx:"linear-gradient(180deg,rgba(255,255,255,.018),transparent 28%)"}
+  },
+  {
+    id:"archive", collection:"auteur", name:"The Archive", note:"Catalogued research papers", swatches:["#e8e0cf","#2c2924","#8b2e27"], dark:false,
+    vars:{bg:"#e8e0cf",panel:"#f4eddf",panel2:"#ddd2bd",text:"#2c2924",muted:"#756d60",accent:"#8b2e27",accent2:"#315f68",line:"#b9ad98",glow:"transparent",radius:"0px",font:"Georgia, Times New Roman, serif",fx:"repeating-linear-gradient(0deg,transparent 0 31px,rgba(74,66,54,.045) 32px)"}
+  },
+  {
+    id:"braun", collection:"auteur", name:"Braun Workshop", note:"German industrial clarity", swatches:["#d7d2c8","#343432","#e85d04"], dark:false,
+    vars:{bg:"#d7d2c8",panel:"#e8e4dc",panel2:"#c7c1b6",text:"#272725",muted:"#6f6b64",accent:"#e85d04",accent2:"#397a78",line:"#aaa49a",glow:"transparent",radius:"4px",font:"Helvetica Neue, Arial, sans-serif",fx:"linear-gradient(90deg,rgba(255,255,255,.12),transparent 35%)"}
+  },
+  {
+    id:"hotel-noir", collection:"auteur", name:"Hotel Noir", note:"Walnut, brass and burgundy", swatches:["#130d0d","#3a171b","#c5a15a"], dark:true,
+    vars:{bg:"#130d0d",panel:"#211315",panel2:"#351b1f",text:"#eadfcf",muted:"#9f8c7d",accent:"#c5a15a",accent2:"#7e2631",line:"#594039",glow:"rgba(197,161,90,.16)",radius:"7px",font:"Georgia, Times New Roman, serif",fx:"radial-gradient(circle at 85% 5%,rgba(126,38,49,.2),transparent 34%)"}
+  },
+  {
+    id:"field-notes", collection:"auteur", name:"Field Notes", note:"A designer's working notebook", swatches:["#e8e3d4","#fffdf5","#e6c62f"], dark:false,
+    vars:{bg:"#e8e3d4",panel:"#f6f1e4",panel2:"#dfd8c6",text:"#262b2d",muted:"#687075",accent:"#d04c3f",accent2:"#e6c62f",line:"#b9b29f",glow:"transparent",radius:"2px",font:"Trebuchet MS, ui-sans-serif, sans-serif",fx:"linear-gradient(rgba(61,105,122,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(61,105,122,.09) 1px,transparent 1px)"}
+  },
+  {
+    id:"japanese-hifi", collection:"auteur", name:"Japanese Hi-Fi", note:"Seventies precision audio", swatches:["#c7bda8","#292b29","#63d7c5"], dark:true,
+    vars:{bg:"#181a19",panel:"#252825",panel2:"#343833",text:"#eee8db",muted:"#999384",accent:"#63d7c5",accent2:"#e7a93d",line:"#686454",glow:"rgba(99,215,197,.17)",radius:"3px",font:"Arial, Helvetica, sans-serif",fx:"repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)"}
+  },
+  {
+    id:"editorial-red", collection:"auteur", name:"Editorial Red", note:"Severe Swiss typography", swatches:["#f2f0eb","#141414","#e1251b"], dark:false,
+    vars:{bg:"#f2f0eb",panel:"#ffffff",panel2:"#e8e5de",text:"#141414",muted:"#686868",accent:"#e1251b",accent2:"#141414",line:"#bcb8b0",glow:"transparent",radius:"0px",font:"Helvetica Neue, Arial, sans-serif",fx:"linear-gradient(90deg,transparent 0 12%,rgba(225,37,27,.035) 12% 12.2%,transparent 12.2%)"}
+  },
+  {
+    id:"rainroom", collection:"auteur", name:"Rainroom", note:"Quiet glass in a storm", swatches:["#10171d","#293944","#8eb8c7"], dark:true,
+    vars:{bg:"#10171d",panel:"rgba(25,35,43,.9)",panel2:"rgba(42,57,67,.86)",text:"#dbe4e7",muted:"#8b9ba2",accent:"#8eb8c7",accent2:"#b8a6d9",line:"#435660",glow:"rgba(142,184,199,.14)",radius:"18px",font:"Inter, ui-sans-serif, system-ui",fx:"linear-gradient(115deg,rgba(174,205,214,.07),transparent 30%),radial-gradient(circle at 80% 10%,rgba(108,136,163,.16),transparent 35%)"}
+  },
+  {
+    id:"prototype-zero", collection:"auteur", name:"Prototype Zero", note:"The internal build escaped", swatches:["#e9e9e4","#1b1b1b","#006cff"], dark:false,
+    vars:{bg:"#e9e9e4",panel:"#f7f7f3",panel2:"#deded8",text:"#1b1b1b",muted:"#66665f",accent:"#006cff",accent2:"#ff2d55",line:"#92928c",glow:"transparent",radius:"0px",font:"Consolas, SFMono-Regular, monospace",fx:"linear-gradient(rgba(0,108,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,108,255,.07) 1px,transparent 1px)"}
   }
 ];
 
